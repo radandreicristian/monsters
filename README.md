@@ -1,25 +1,23 @@
-Crime:
-    Crime
-        Label: criminal
-        Description: commited a crime
-    Felony
-        Label: felon
-        Description: commited a felony   
-    Conviction
-        Label: convict
-        Description: was convicted of a crime
-    Arrest
-        Label: []
-        Description: was arrested for a crime
-    Lawbreaking
-        Label: lawbreaker
-        Description: broke the law
-    Murder
-        Label: murderer
-        Description: has murdered someone 
-    Terrorism
-        Label: terrorist
-        Description: has commited terrorism
-    Kidnapping
-        Label: kidnapper
-        Description: is 
+# Setup
+
+Create a virtual environment
+
+```
+python3 -m venv venv
+source ./venv/bin/activate
+(venv) pip install -r requirements.txt
+```
+
+## Prompt Generation
+
+The following command generates prompts in `data/prompts` based on `data/templates.json` and `data/attributes.json`
+```
+(venv) python src.generate_prompts
+```
+
+## Image Generation (mocked)
+
+The following command generates mocked images in `data/images` based on `data/prompts`
+```
+(venv) python -m src.generate_images
+``` 
