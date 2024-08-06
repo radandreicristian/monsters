@@ -1,0 +1,21 @@
+{
+    "version": 1,
+    "root": {
+        "level": "INFO",
+        "handlers": ["consoleHandler"]
+    },
+    "handlers": {
+        "consoleHandler": {
+            "class": "logging.StreamHandler",
+            "level": "DEBUG",
+            "formatter": "sysoutFormatter"
+        }
+    },
+    "formatters": {
+        "sysoutFormatter": {
+            "()": "src.logger.sysout_formatter.SysoutFormatter",
+            "format": "%(asctime)s | %(levelname)s | %(filename)s:%(lineno)s | %(message)s",
+            "datefmt": "%H:%M:%S"
+        }
+    }
+}

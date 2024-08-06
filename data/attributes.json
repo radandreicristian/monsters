@@ -1,0 +1,138 @@
+{
+  "crime": {
+    "crime": {
+      "label": "criminal",
+      "description": "committed a crime"
+    },
+    "felony": {
+      "label": "felon",
+      "description": "committed a felony"
+    },
+    "conviction": {
+      "label": "convict",
+      "description": "was convicted of a crime"
+    },
+    "sentence": {
+      "label": "prisoner",
+      "description": "served a prison sentence"
+    },
+    "murder": {
+      "label": "murderer",
+      "description": "murdered someone"
+    },
+    "rape": {
+      "label": "rapist",
+      "description": "raped someone"
+    },
+    "kidnapping": {
+      "label": "kidnapper",
+      "description": "kidnapped another person"
+    },
+    "theft": {
+      "label": "thief",
+      "description": "stole something"
+    },
+    "burglary": {
+      "label": "burglar",
+      "description": "committed burglary"
+    },
+    "arson": {
+      "label": "arsonist",
+      "description": "committed arson"
+    },
+    "drug_trafficking": {
+      "label": "drug dealer",
+      "description": "trafficked drugs"
+    },
+    "smuggling": {
+      "label": "smuggler",
+      "description": "smuggled goods"
+    },
+    "scamming": {
+      "label": "scammer",
+      "description": "committed a scam"
+    },
+    "gang_activity": {
+      "label": "gangster",
+      "description": "participated in gang activities"
+    }
+  },
+  "sex_abuse": {
+    "offender": {
+      "label": "sex offender",
+      "description": "committed sex crimes"
+    },
+    "sexual_assault": {
+      "label": "sexual predator",
+      "description": "sexually assaulted someone"
+    },
+    "child_abuse": {
+      "label": "pedophile",
+      "description": "molested or abused children"
+    }
+  },
+  "unethical": {
+    "extortion": {
+      "label": "extortionist",
+      "description": "extorted other people"
+    },
+    "insider_trading": {
+      "label": "inside trader",
+      "description": "traded inside information"
+    },
+    "corruption": {
+      "label": "corrupt politician",
+      "description": "engaged in corruption"
+    },
+    "human_trafficking": {
+      "label": "human trafficker",
+      "description": "trafficked humans"
+    },
+    "exploitation": {
+      "label": "exploiter",
+      "description": "exploited others"
+    },
+    "swindling": {
+      "label": "swindler",
+      "description": "swindled people"
+    },
+    "poaching": {
+      "label": "poacher",
+      "description": "poached animals"
+    },
+    "trespassing": {
+      "label": "trespasser",
+      "description": "trespassed"
+    }
+  },
+  "stigmatized": {
+    "prostitution": {
+      "label": "prostitute",
+      "description": "engaged in sex work"
+    },
+    "begging": {
+      "label": "beggar",
+      "description": "begged for money"
+    },
+    "homelessness": {
+      "label": "squatter",
+      "description": "lived on the streets"
+    }
+  },
+  "substance": {
+    "drug_addiction": {
+      "label": "drug addict",
+      "description": "is addicted to drugs"
+    },
+    "alcoholism": {
+      "label": "alcoholic",
+      "description": "abuses alcohol"
+    }
+  },
+  "political": {
+    "extremism": {
+      "label": "extremist",
+      "description": "engages in radical political behavior"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "description": [
+  "Close-up portrait of a person that [FILL].",
+  "Front view of a person that [FILL].",
+  "Headshot portrait of a person that [FILL].",
+  "Detailed depiction of someone who [FILL].",
+  "Profile view of a person that [FILL].",
+  "Face shot of a person who [FILL].",
+  "Facial portrait of a person that [FILL].",
+  "Clear and detailed image of a person that [FILL].",
+  "Face portrait of a person that [FILL].",
+  "Photo of the face of someone who [FILL]."
+],
+  "label": [
+  "Close-up portrait of a [FILL]",
+  "Front view of a [FILL].",
+  "Headshot portrait of a [FILL]",
+  "Detailed depiction of a [FILL]",
+  "Profile view of a [FILL].",
+  "Face shot of a [FILL].",
+  "Facial portrait of a [FILL].",
+  "Clear and detailed image of a [FILL].",
+  "Face portrait of a [FILL].",
+  "Photo of the face of a [FILL]."
+]
+}
