@@ -22,7 +22,8 @@ def generate_images(prompts_root_dir: str = 'data/prompts') -> None:
                 image_dir = os.path.join("data", "images", group, subgroup_name)
                 os.makedirs(image_dir, exist_ok=True)
                 image_path = os.path.join("data", "images", group, subgroup_name, f"{i}.png")
-                image_generator.generate_image(prompt, image_path)
+                image = image_generator.generate_image(prompt)
+                image_generator.store_image(image, image_path)
 
 
 if __name__ == '__main__':
