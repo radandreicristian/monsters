@@ -122,7 +122,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -164,3 +163,5 @@ cython_debug/
 data/images
 
 data/prompts
+
+src/config/.secret.env
