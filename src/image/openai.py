@@ -1,7 +1,7 @@
 import ast
 import logging
 import os
-from openai import OpenAI
+from openai import AsyncOpenAI
 
 from src.image.base import BaseImageAttributeExtractor
 from src.utils.base64 import encode_image
@@ -16,7 +16,7 @@ class OpenAiImageAttributeExtractor(BaseImageAttributeExtractor):
         self.api_key = kwargs.get("OPENAI_API_KEY")
         self.model_name = kwargs.get("OPENAI_MODEL_NAME")
 
-        self.openai_client = OpenAI(api_key=self.api_key)
+        self.openai_client = AsyncOpenAI(api_key=self.api_key)
 
         self.system_prompt = kwargs.get("OPENAI_IMAGE_FEATURE_EXTRACTION_SYSTEM_PROMPT")
         self.user_prompt = kwargs.get("OPENAI_IMAGE_FEATURE_EXTRACTION_USER_PROMPT")
@@ -56,11 +56,12 @@ class OpenAiImageAttributeExtractor(BaseImageAttributeExtractor):
             ],
         }
 
-    def extract_attributes(self, images_root: str) -> list[str]:
+    async def extract_attributes(self, images_root: str) -> list[str]:
         payload = self.create_payload(images_root=images_root)
-        response = self.openai_client.chat.completions.create(**payload, temperature=1e-9).choices[0].message.content
+        response = await self.openai_client.chat.completions.create(**payload, temperature=1e-9)
+        content = response.choices[0].message.content
         try:
-            parsed_response = ast.literal_eval(response)
+            parsed_response = ast.literal_eval(content)
             return parsed_response
         except SyntaxError:
             logger.error(f"Could not parse response {response}", exc_info=True)
