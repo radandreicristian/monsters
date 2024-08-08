@@ -21,3 +21,11 @@ The following command generates mocked images in `data/images` based on `data/pr
 ```
 (venv) python -m src.generate_images
 ``` 
+
+## Attribute Extraction
+
+The following command generates a dictionary of common attributes for each subgroup in the `data/images` folder.
+If an attribute (e.g. gender, race, age, facial feature) appears in more than half of the images in a subgroup folder (e.g. /sex_abuse/child_abuse), it will appear in an `attributes.json` file located in the root of the subgroup.
+```
+(venv) python -m src.extract_attributes
+```
