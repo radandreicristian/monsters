@@ -38,7 +38,7 @@ tqdm==4.66.5
 typer==0.9.4
 typing_extensions==4.12.2
 tzdata==2024.1
-
+diffusers==0.30.0
 
 # PyTorch for Linux with CUDA 11.1
 torch==2.4.0+cu121; platform_system == "Linux"
