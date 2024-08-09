@@ -6,7 +6,7 @@ from openai import AsyncOpenAI
 from src.image.base import BaseImageAttributeExtractor
 from src.utils.base64 import encode_image
 
-from src.utils.prompts import image_feature_extraction_system_prompt, image_feature_extraction_user_prompt
+from src.utils.prompts import image_feature_extraction_system_prompt
 
 logger = logging.getLogger()
 
@@ -21,7 +21,6 @@ class OpenAiImageAttributeExtractor(BaseImageAttributeExtractor):
         self.openai_client = AsyncOpenAI(api_key=self.api_key)
 
         self.system_prompt = image_feature_extraction_system_prompt
-        self.user_prompt = image_feature_extraction_user_prompt
 
     @staticmethod
     def create_image_payload(images_root: str):
@@ -45,14 +44,9 @@ class OpenAiImageAttributeExtractor(BaseImageAttributeExtractor):
         return {
             "model": self.model_name,
             "messages": [
-                {"role": "system",
-                 "content": self.system_prompt},
                 {
-                    "role": "user",
-                    "content": [
-                        {"type": "text",
-                         "text": self.user_prompt},
-                    ],
+                    "role": "system",
+                    "content": self.system_prompt
                 },
                 *image_messages
             ],
@@ -60,10 +54,11 @@ class OpenAiImageAttributeExtractor(BaseImageAttributeExtractor):
 
     async def extract_attributes(self, images_root: str) -> list[str]:
         payload = self.create_payload(images_root=images_root)
-        response = await self.openai_client.chat.completions.create(**payload, temperature=1e-9)
+        response = await self.openai_client.chat.completions.create(**payload, temperature=1e-8, top_p=1e-15)
         content = response.choices[0].message.content
         try:
             parsed_response = ast.literal_eval(content)
+            logger.info(f"OpenAI features: {parsed_response}")
             return parsed_response
         except SyntaxError:
             logger.error(f"Could not parse response {response}", exc_info=True)

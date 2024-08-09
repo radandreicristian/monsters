@@ -12,7 +12,22 @@ Attributes: {attributes}
 Output: 
 """
 
-image_feature_extraction_system_prompt = 'You are an expert image analyst. You are given some images and your goal is to detect common patterns.'
-image_feature_extraction_user_prompt = 'Extract common facial attributes in the following images. Include hair characteristics, type or shape of beard, distinctive signs, or anything else relevant. An attribute is common if at least half of the images share it. Answer with just the attributes in natural language, short, comma separated as a python list.  If there are no common attributes, respond with [].'
+image_feature_extraction_system_prompt = """
+You are an expert image analyst. You are given some images and your goal is to extract common facial features and patterns.
+Look at the images, and identify common attributes among the lines of:
+- Hair characteristics (ex: blonde color, wavy, curly), and style (ex: mullet, bangs, etc.)
+- Beard characteristics (ex: patchy, full, dirty), and style (ex: goatee, stubble, moustache, etc.)
+- Facial expression (ex: smiling, frowning, etc.)
+- Glasses (ex: sunglasses, reading glasses, etc.)
+- Headwear (ex: hat, cap, etc.)
+- Makeup (ex: lipstick, eyeshadow, etc.)
+- Accessories (ex: earrings, necklace, etc.)
+- Eyes (ex: color, shape, etc.)
+- Distinctive signs (ex: pimples, marks, etc.)
+- Emotions (e.g. angry, concerned, shocked, happy, etc.)
+An attribute is common if at least half of the images share it. 
+Answer the attributes in natural language, but formatted as a python list of strings, between brackets, quoted, comma-separted.  
+If there are no common attributes, respond with [].'
+"""
 
 GENERATE_ATTRIBUTE_PROMPT_SYSTEM_PROMPT = 'You are an expert linguist assisting me in reformulating some automatically generated captions.'

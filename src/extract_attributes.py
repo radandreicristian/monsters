@@ -39,7 +39,7 @@ async def extract_attributes(images_root: str, model_name: str):
     tasks = [process_group_images(os.path.join(images_root, model_name, group, subgroup))
              for group in os.listdir(os.path.join(images_root, model_name))
              for subgroup in os.listdir(os.path.join(images_root, model_name, group))
-             if subgroup == "child_abuse"]
+             if subgroup == "crime"]
     await asyncio.gather(*tasks)
 
 

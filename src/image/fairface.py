@@ -8,10 +8,9 @@ import numpy as np
 import torchvision
 from torchvision import transforms
 import dlib
-import argparse
 import asyncio
 from src.image.base import BaseImageAttributeExtractor
-
+from torchvision.models import ResNet34_Weights
 from src.logger.utils import get_logger
 
 logger = get_logger()
@@ -35,13 +34,11 @@ class FairFaceImageAttributeExtractor(BaseImageAttributeExtractor):
             "age": ['0-2', '3-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70+']
             # "age": ["infant", "child", "teenager", "young adult", "adult", "middle-aged", "mature", "senior", "elderly"] # noqa
         }
-        self.detected_faces_path = kwargs.get("DETECTED_FACES_PATH")
-        os.makedirs(self.detected_faces_path, exist_ok=True)
         self.face_detector = dlib.cnn_face_detection_model_v1('src/models/mmod_human_face_detector.dat')
         self.shape_predictor = dlib.shape_predictor('src/models/shape_predictor_5_face_landmarks.dat')
 
     def load_fair_face_model(self, model_path, num_classes):
-        model = torchvision.models.resnet34(pretrained=True)
+        model = torchvision.models.resnet34(weights=ResNet34_Weights.DEFAULT)
         model.fc = nn.Linear(model.fc.in_features, num_classes)
         if torch.cuda.is_available():
             model.load_state_dict(torch.load(model_path, weights_only=True))
@@ -81,11 +78,12 @@ class FairFaceImageAttributeExtractor(BaseImageAttributeExtractor):
             faces.append(self.shape_predictor(img, rect))
         images = dlib.get_face_chips(img, faces, size=size, padding=padding)
 
+        directory, file_name = os.path.split(image_path)
+
         for idx, image in enumerate(images):
-            image_name = os.path.basename(image_path)
-            path_sp = os.path.splitext(image_name)
-            face_name = os.path.join(self.detected_faces_path, f"{path_sp[0]}_face{idx}{path_sp[1]}")
-            dlib.save_image(image, face_name)
+            path_sp = os.path.splitext(file_name)
+            detected_face_path = os.path.join(directory, f"{path_sp[0]}_face_{idx}{path_sp[1]}")
+            dlib.save_image(image, detected_face_path)
 
     async def predict_attributes(self, image_paths: list[str]):
         tasks = [self.process_prediction(img_name) for img_name in image_paths]
@@ -121,9 +119,12 @@ class FairFaceImageAttributeExtractor(BaseImageAttributeExtractor):
                 race_scores, gender_scores, age_scores]
 
     async def extract_attributes(self, images_root: str) -> dict[str, str]:
-        image_paths = [os.path.join(images_root, x) for x in os.listdir(images_root) if x.endswith(('.jpg', '.png'))]
-        await self.detect_faces(image_paths)
-        processed_image_paths = [os.path.join(self.detected_faces_path, x) for x in os.listdir(self.detected_faces_path)]
+        valid_image_paths = [os.path.join(images_root, x)
+                             for x in os.listdir(images_root)
+                             if x.endswith(('.jpg', '.png'))
+                             and "face" not in x]  # Exclude processed images
+        await self.detect_faces(valid_image_paths)
+        processed_image_paths = [os.path.join(images_root, x) for x in os.listdir(images_root) if "face" in x]
         results = await self.predict_attributes(image_paths=processed_image_paths)
         majority_attributes = self.get_majority_attributes(results)
         return majority_attributes
