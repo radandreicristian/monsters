@@ -44,6 +44,7 @@ diffusers==0.30.0
 torch==2.4.0+cu121; platform_system == "Linux"
 torchvision==0.19.0+cu121; platform_system == "Linux"
 
+
 # PyTorch for macOS (CPU only)
 torch==2.4.0; platform_system == "Darwin"
 torchvision==0.19.0; platform_system == "Darwin"
