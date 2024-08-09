@@ -6,6 +6,8 @@ from openai import AsyncOpenAI
 from src.image.base import BaseImageAttributeExtractor
 from src.utils.base64 import encode_image
 
+from src.utils.prompts import image_feature_extraction_system_prompt, image_feature_extraction_user_prompt
+
 logger = logging.getLogger()
 
 
@@ -18,8 +20,8 @@ class OpenAiImageAttributeExtractor(BaseImageAttributeExtractor):
 
         self.openai_client = AsyncOpenAI(api_key=self.api_key)
 
-        self.system_prompt = kwargs.get("OPENAI_IMAGE_FEATURE_EXTRACTION_SYSTEM_PROMPT")
-        self.user_prompt = kwargs.get("OPENAI_IMAGE_FEATURE_EXTRACTION_USER_PROMPT")
+        self.system_prompt = image_feature_extraction_system_prompt
+        self.user_prompt = image_feature_extraction_user_prompt
 
     @staticmethod
     def create_image_payload(images_root: str):

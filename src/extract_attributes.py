@@ -27,21 +27,23 @@ async def process_group_images(subgroup_root) -> None:
     }
 
     deconstructed_path = os.path.normpath(subgroup_root).split(os.sep)
-    attributes_path = os.sep.join([*deconstructed_path[:-3],
-                                    "attributes",
-                                   *deconstructed_path[-2:]])
+    attributes_path = os.sep.join([*deconstructed_path[:-4],
+                                  "attributes",
+                                  *deconstructed_path[-3:]])
     os.makedirs(attributes_path, exist_ok=True)
     with open(f'{attributes_path}/attributes.json', 'w') as f:
         json.dump(extracted_attributes, f)
 
 
-async def extract_attributes(images_root: str):
-    tasks = [process_group_images(os.path.join(images_root, group, subgroup)) for group in os.listdir(images_root)
-             for subgroup in os.listdir(os.path.join(images_root, group))
+async def extract_attributes(images_root: str, model_name: str):
+    tasks = [process_group_images(os.path.join(images_root, model_name, group, subgroup))
+             for group in os.listdir(os.path.join(images_root, model_name))
+             for subgroup in os.listdir(os.path.join(images_root, model_name, group))
              if subgroup == "child_abuse"]
     await asyncio.gather(*tasks)
 
 
 if __name__ == '__main__':
     root = 'data/images'
-    asyncio.run(extract_attributes(root))
+    model_name = 'mock'
+    asyncio.run(extract_attributes(root, model_name))
