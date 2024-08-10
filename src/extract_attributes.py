@@ -2,6 +2,9 @@ import json
 import os
 import asyncio
 
+import typer
+
+from src.utils.async_wrapper import run_async
 from src.image.openai import OpenAiImageAttributeExtractor
 from src.image.fairface import FairFaceImageAttributeExtractor
 from dotenv import dotenv_values
@@ -35,7 +38,9 @@ async def process_group_images(subgroup_root) -> None:
         json.dump(extracted_attributes, f)
 
 
-async def extract_attributes(images_root: str, model_name: str):
+@run_async
+async def extract_attributes(model_name: str,
+                             images_root: str = 'data/images') -> None:
     tasks = [process_group_images(os.path.join(images_root, model_name, group, subgroup))
              for group in os.listdir(os.path.join(images_root, model_name))
              for subgroup in os.listdir(os.path.join(images_root, model_name, group))
@@ -44,6 +49,4 @@ async def extract_attributes(images_root: str, model_name: str):
 
 
 if __name__ == '__main__':
-    root = 'data/images'
-    model_name = 'mock'
-    asyncio.run(extract_attributes(root, model_name))
+    typer.run(extract_attributes)

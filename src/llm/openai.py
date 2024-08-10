@@ -1,5 +1,5 @@
 from src.llm.base import BaseLlmClient
-
+from src.utils.prompts import add_attributes_to_template_prompt
 from openai import AsyncOpenAI
 
 
@@ -12,7 +12,7 @@ class OpenAiLlmClient(BaseLlmClient):
 
         self.openai_client = AsyncOpenAI(api_key=self.api_key)
 
-        self.system_prompt = kwargs.get("GENERATE_ATTRIBUTE_PROMPT_SYSTEM_PROMPT")
+        self.system_prompt = add_attributes_to_template_prompt
 
     def create_payload(self, prompt: str):
         return {
