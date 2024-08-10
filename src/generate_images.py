@@ -4,17 +4,30 @@ import os
 import typer
 
 from src.tti.mock import MockTextToImage
+from src.tti.stable_diffusion import StableDiffusionTextToImage
+from src.logger.utils import get_logger
 
-image_generator = MockTextToImage()
 
+logger = get_logger()
+
+def get_generator(generation_model_name: str):
+    if generation_model_name == 'mock':
+        return MockTextToImage()
+    else:
+        return StableDiffusionTextToImage(model_id=generation_model_name)
 
 def generate_images(generation_model_name: str,
                     prompts_root_dir: str = 'data/prompts') -> None:
+    
+    image_generator = get_generator(generation_model_name)
+
+    logger.info(image_generator)
     groups = os.listdir(prompts_root_dir)
     for group in groups:
         group_path = os.path.join(prompts_root_dir, group)
         subgroups = os.listdir(group_path)
         for subgroup in subgroups:
+            logger.info(f'Generating images for {group}/{subgroup}...')
             subgroup_name = subgroup.replace(".json", "")
             subgroup_path = os.path.join(group_path, subgroup)
             with open(subgroup_path, "r") as f:

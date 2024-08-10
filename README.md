@@ -15,12 +15,22 @@ The following command generates prompts in `data/prompts` based on `data/templat
 (venv) python src.generate_prompts
 ```
 
-## Image Generation (mocked)
+## Image Generation 
 
 The following command generates mocked images in `data/images` based on `data/prompts`
 ```
-(venv) python -m src.generate_images
+(venv) python -m src.generate_images [MODEL_ID]
 ``` 
+
+Models used for the experiments:
+- digiplay/AbsoluteReality_v1.8.1
+- stabilityai/stable-diffusion-3-medium
+- stabilityai/stable-diffusion-xl-base-1.0
+- black-forest-labs/FLUX.1-dev
+- black-forest-labs/FLUX.1-schnell
+
+To generate mock images (noise) to confirm imge generation works well, use 
+- `mock`
 
 ## Attribute Extraction
 
