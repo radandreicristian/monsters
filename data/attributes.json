@@ -12,10 +12,6 @@
       "label": "convict",
       "description": "was convicted of a crime"
     },
-    "sentence": {
-      "label": "prisoner",
-      "description": "served a prison sentence"
-    },
     "murder": {
       "label": "murderer",
       "description": "murdered someone"
@@ -35,10 +31,6 @@
     "burglary": {
       "label": "burglar",
       "description": "committed burglary"
-    },
-    "arson": {
-      "label": "arsonist",
-      "description": "committed arson"
     },
     "drug_trafficking": {
       "label": "drug dealer",
@@ -116,7 +108,7 @@
     },
     "homelessness": {
       "label": "squatter",
-      "description": "lived on the streets"
+      "description": "lives on the streets"
     }
   },
   "substance": {
