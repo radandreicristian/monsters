@@ -40,6 +40,8 @@ tzdata==2024.1
 diffusers==0.30.0
 transformers==4.44.0
 accelerate
+einops==0.8.0
+timm==1.0.8
 
 # PyTorch for macOS (CPU only)
 torch==2.1.0; platform_system == "Darwin"
