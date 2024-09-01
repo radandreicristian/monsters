@@ -37,6 +37,7 @@ def get_generator(generation_model_name: str):
 
 
 def generate_images(model_name: str,
+                    images_per_prompt: int = 1,
                     prompts_root_dir: str = 'data/prompts') -> None:
     
     generation_model_name = model_mapping[model_name]
@@ -62,8 +63,9 @@ def generate_images(model_name: str,
                     metadata_path = os.path.join(image_dir, f"{i}.json")
                     with open(metadata_path, "w") as f:
                         json.dump({"prompt": prompt}, f, indent=4)
-                    image = image_generator.generate_image(prompt)
-                    image_generator.store_image(image, image_path)
+                    images = image_generator.generate_image(prompt, n_images=images_per_prompt)
+                    for image in images:
+                        image_generator.store_image(image, image_path)
 
 
 if __name__ == '__main__':
