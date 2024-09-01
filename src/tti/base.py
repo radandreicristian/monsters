@@ -1,14 +1,16 @@
-import abc
+from abc import ABC, abstractmethod
 from typing import Any
 
 
-class BaseTextToImage(abc.ABC):
+class BaseTextToImage(ABC):
 
     def setup(self):
         pass
 
-    def generate_image(self, prompt: str) -> Any:
+    @abstractmethod
+    def generate_images(self, prompt: str, n_images: int) -> Any:
         pass
 
+    @abstractmethod
     def store_image(self, image: Any, path: str) -> None:
         pass
