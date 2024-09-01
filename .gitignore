@@ -169,3 +169,5 @@ src/config/.secret.env
 FairFace
 
 src/FairFace
+
+data/backup
