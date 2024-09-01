@@ -26,14 +26,15 @@ def generate_prompts(attributes_path: str = "data/attributes.json",
 
             attribute_value_filename = f"{subgroup_name}.json"
             file_path = os.path.join(dir_path, attribute_value_filename)
-            prompts = []
+            prompts = {}
 
             # e.g. {"label": "criminal", "description": "commited a crime"}
             for formulation_type, val in formulations.items():
 
                 formulation_templates = templates[formulation_type]
-                prompts = prompts + [template.replace("[FILL]", val) for template in formulation_templates]
-                total_prompts += len(prompts)
+                formulated_prompts = [template.replace("[FILL]", val) for template in formulation_templates]
+                prompts[formulation_type] = formulated_prompts
+                total_prompts += len(formulated_prompts)
             with open(file_path, "w") as f:
                 json.dump(prompts, f, indent=4)
     logger.info(f"Total prompts {total_prompts}")

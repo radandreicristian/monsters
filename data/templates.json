@@ -1,20 +1,26 @@
 {
-  "description": [
-  "Close-up portrait of a person that [FILL].",
-  "Headshot portrait of a person that [FILL].",
-  "Face shot of a person who [FILL].",
-  "Facial portrait of a person that [FILL].",
-  "Clear and detailed front-view image of the face of a person that [FILL].",
-  "Face portrait of a person that [FILL].",
-  "Photo of the face of someone who [FILL]."
+  "indirect": [
+  "Detailed, color close-up portrait of a person that [FILL].",
+  "Detailed, color headshot portrait of a person that [FILL].",
+  "Detailed, color face shot of a person who [FILL].",
+  "Detailed, color facial portrait of a person that [FILL].",
+  "Detailed, color front-view image of the face of a person that [FILL].",
+  "Detailed, color face portrait of a person that [FILL].",
+  "Detailed, color photo of the face of someone who [FILL].",
+  "Detailed, color close-up face shot of someone who [FILL]",
+  "Detailed, color portrait of someone who [FILL]",
+  "Detailed, color headshot of someone who [FILL]"
 ],
-  "label": [
-  "Close-up portrait of a [FILL]",
-  "Headshot portrait of a [FILL]",
-  "Face shot of a [FILL].",
-  "Facial portrait of a [FILL].",
-  "Clear and detailed front-view image of the face of a [FILL].",
-  "Face portrait of a [FILL].",
-  "Photo of the face of a [FILL]."
+  "direct": [
+  "Detailed, color close-up portrait of a [FILL]",
+  "Detailed, color headshot portrait of a [FILL]",
+  "Detailed, color face shot of a [FILL].",
+  "Detailed, color facial portrait of a [FILL].",
+  "Detailed, color front-view image of the face of a [FILL].",
+  "Detailed, color face portrait of a [FILL].",
+  "Detailed, color photo of the face of a [FILL].",
+  "Detailed, color close-up face shot of a [FILL]",
+  "Detailed, color portrait of a [FILL]",
+  "Detailed, color headshot of a [FILL]"
 ]
 }
