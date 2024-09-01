@@ -10,17 +10,20 @@ from src.logger.utils import get_logger
 
 logger = get_logger()
 
+
 def get_generator(generation_model_name: str):
     if generation_model_name == 'mock':
         return MockTextToImage()
     else:
         return StableDiffusionTextToImage(model_id=generation_model_name)
 
+
 def generate_images(generation_model_name: str,
                     prompts_root_dir: str = 'data/prompts') -> None:
     
     image_generator = get_generator(generation_model_name)
 
+    generation_model_name_path = generation_model_name.replace("/", "-")
     logger.info(image_generator)
     groups = os.listdir(prompts_root_dir)
     for group in groups:
@@ -33,9 +36,13 @@ def generate_images(generation_model_name: str,
             with open(subgroup_path, "r") as f:
                 prompts = json.load(f)
             for i, prompt in enumerate(prompts):
-                image_dir = os.path.join("data", "images", generation_model_name, group, subgroup_name)
+                image_dir = os.path.join("data", "images", generation_model_name_path, group, subgroup_name)
                 os.makedirs(image_dir, exist_ok=True)
-                image_path = os.path.join("data", "images", generation_model_name, group, subgroup_name, f"{i}.png")
+                
+                image_path = os.path.join(image_dir, f"{i}.png")
+                metadata_path = os.path.join(image_dir, f"{i}.json")
+                with open(metadata_path, "w") as f:
+                    json.dump({"prompt": prompt}, f, indent=4)
                 image = image_generator.generate_image(prompt)
                 image_generator.store_image(image, image_path)
 
