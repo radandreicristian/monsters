@@ -1,8 +1,9 @@
-import abc
+from abc import abstractmethod, ABC
 from typing import Any
 
 
-class BaseVqa(abc.ABC):
+class BaseVqa(ABC):
 
-    def answer_question(self, image: Any, prompt: str) -> Any:
+    @abstractmethod
+    def answer_question(self, image_path: Any, prompt: str) -> Any:
         pass
