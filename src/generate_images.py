@@ -4,47 +4,36 @@ import os
 import typer
 
 from src.tti.mock import MockTextToImage
-from src.tti.stable_diffusion import StableDiffusionTextToImage
+from src.tti.absolute_reality import AbsoluteRealityTextToImage
+from src.tti.sdxl import SdxlTextToImage
 from src.logger.utils import get_logger
-from diffusers.utils.testing_utils import enable_full_determinism
+from src.utils.deterministic import make_deterministic
 from diffusers.utils.logging import disable_progress_bar
 
-import torch
-import numpy as np
-import random
-
-# Deterministic kamaehama
-
-random.seed(0)
-np.random.seed(0)
-torch.manual_seed(0)
-enable_full_determinism()
-os.env["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
-
-logger = get_logger()
+make_deterministic()
 disable_progress_bar()
 
-model_mapping = {
-    "dp": "digiplay/AbsoluteReality_v1.8.1"
+logger = get_logger()
+
+id_to_checkpoint = {
+    "dp": "digiplay/AbsoluteReality_v1.8.1",
+    "sdxl": "stabilityai/sdxl-turbo"
 }
 
+name_to_tti_mapping = {
+    "dp": AbsoluteRealityTextToImage,
+    "sdxl": SdxlTextToImage,
+    "mock": MockTextToImage
+}
 
-def get_generator(generation_model_name: str):
-    if generation_model_name == 'mock':
-        return MockTextToImage()
-    else:
-        return StableDiffusionTextToImage(model_id=generation_model_name)
-
-
-def generate_images(model_name: str,
+def generate_images(model_id: str,
                     images_per_prompt: int = 1,
                     prompts_root_dir: str = 'data/prompts') -> None:
     
-    generation_model_name = model_mapping[model_name]
-    image_generator = get_generator(generation_model_name)
+    checkpoint_name = id_to_checkpoint[model_id]
+    text_to_image = name_to_tti_mapping[model_id]()
 
-    generation_model_name_path = generation_model_name.replace("/", "-")
-    logger.info(image_generator)
+    generation_model_name_path = checkpoint_name.replace("/", "-")
     groups = os.listdir(prompts_root_dir)
     for group in groups:
         group_path = os.path.join(prompts_root_dir, group)
@@ -63,9 +52,9 @@ def generate_images(model_name: str,
                     metadata_path = os.path.join(image_dir, f"{i}.json")
                     with open(metadata_path, "w") as f:
                         json.dump({"prompt": prompt}, f, indent=4)
-                    images = image_generator.generate_image(prompt, n_images=images_per_prompt)
+                    images = text_to_image.generate_images(prompt, n_images=images_per_prompt)
                     for image in images:
-                        image_generator.store_image(image, image_path)
+                        text_to_image.store_image(image, image_path)
 
 
 if __name__ == '__main__':
