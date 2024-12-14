@@ -9,9 +9,8 @@ class FlorenceVqa(BaseVqa):
 
     def __init__(self, *args, **kwargs):
         self.model = AutoModelForCausalLM.from_pretrained("microsoft/Florence-2-large",
-                                                          attn_implementation="sdpa",
-                                                     trust_remote_code=True)
-        self.processor = AutoProcessor.from_pretrained("microsoft/Florence-2-large-ft", trust_remote_code=True)
+                                                          attn_implementation="sdpa", trust_remote_code=True)
+        self.processor = AutoProcessor.from_pretrained("microsoft/Florence-2-large", trust_remote_code=True)
 
     def answer_question(self, image_path: str, prompt: str) -> Any:
         image = Image.open(image_path)
@@ -28,6 +27,7 @@ class FlorenceVqa(BaseVqa):
                                                           image_size=(image.width, image.height))
 
         print(parsed_answer)
+
 
 if __name__ == '__main__':
     vqa = FlorenceVqa()

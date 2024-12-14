@@ -15,6 +15,7 @@ disable_progress_bar()
 
 logger = get_logger()
 
+
 id_to_checkpoint = {
     "dp": "digiplay/AbsoluteReality_v1.8.1",
     "sdxl": "stabilityai/sdxl-turbo"
