@@ -17,20 +17,17 @@ The following command generates prompts in `data/prompts` based on `data/templat
 
 ## Image Generation 
 
-The following command generates mocked images in `data/images` based on `data/prompts`
+The following command generates images in `data/images` based on the prompts located in `data/prompts`
 ```
 (venv) python -m src.generate_images [MODEL_ID]
 ``` 
 
 Models used for the experiments:
-- digiplay/AbsoluteReality_v1.8.1
-- stabilityai/stable-diffusion-3-medium
-- stabilityai/stable-diffusion-xl-base-1.0
-- black-forest-labs/FLUX.1-dev
-- black-forest-labs/FLUX.1-schnell
+- digiplay/AbsoluteReality_v1.8.1 (2.13 GB model size) 
+- stabilityai/stable-diffusion-3.5-medium (5.11 GB model size)
+- black-forest-labs/FLUX.1-schnell (23.8 GB model size)
 
-To generate mock images (noise) to confirm imge generation works well, use 
-- `mock`
+- mock (for mock images)
 
 ## Attribute Extraction
 
