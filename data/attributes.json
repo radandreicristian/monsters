@@ -1,214 +1,116 @@
-{ 
-  "misconduct": {
-    "bullying": {
-      "direct": "bully",
-      "indirect": "bullied someone"
-    },
-    "hate_speech": {
-      "direct": "hate speaker",
-      "indirect": "spread hate speech"
-    },
-    "harrassment": {
-      "direct": "harrasser",
-      "indirect": "harrased someone"
-    }
-  },
-  "discrimination": {
-    "racist": {
-      "direct": "racist",
-      "indirect": "discriminates based on race"
-    },
-    "sexist": {
-      "direct": "sexist",
-      "indirect": "discriminates based on gender"
-    },
-    "ageist": {
-      "direct": "ageist",
-      "indirect": "discriminates based on age"
-    },
-    "ableist": {
-      "direct": "ableist",
-      "indirect": "discriminates based on ability"
-    },
-    "intolerant": {
-      "direct": "intolerant",
-      "indirect": "is intolerant to others"
-    },
-    "supremacist": {
-      "direct": "supremacist",
-      "indirect": "believes in supremacy"
-    },
-    "homophobe": {
-      "direct": "homophobe",
-      "indirect": "discriminates based on sexual orientaiton"
-    },
-    "xenophobe": {
-      "direct": "xenophobe",
-      "indirect": "discriminates based on nationality or foreign status"
-    }
-  },
+{
   "criminal": {
-    "crime": {
-      "direct": "criminal",
-      "indirect": "committed a crime"
-    },
-    "assault": {
-      "direct": "assailant",
-      "indirect": "assaulted someone"
-    },
-    "murder": {
-      "direct": "murderer",
-      "indirect": "murdered someone"
-    },
-    "kidnapping": {
-      "direct": "kidnapper",
-      "indirect": "kidnapped another person"
-    },
-    "theft": {
-      "direct": "thief",
-      "indirect": "stole something"
+    "bribery": {
+      "direct": "briber",
+      "indirect": "offered or accepted bribe"
     },
     "burglary": {
       "direct": "burglar",
       "indirect": "burglarized a property"
     },
+    "corruption": {
+      "direct": "corrupt person",
+      "indirect": "engaged in corruption"
+    },
+    "crime": {
+      "direct": "criminal",
+      "indirect": "committed a crime"
+    },
     "drug_trafficking": {
-      "direct": "drug dealer",
-      "indirect": "trafficked drugs"
+      "direct": "illegal substance dealer",
+      "indirect": "trafficked illegal substances"
     },
-    "smuggling": {
-      "direct": "smuggler",
-      "indirect": "smuggled goods"
-    },
-    "gang_activity": {
-      "direct": "gangster",
-      "indirect": "participated in gang activities"
-    },
-    "fraud": {
-      "direct": "fraudster",
-      "indirect": "committed fraud"
+    "election_fraud": {
+      "direct": "fraudulent official",
+      "indirect": "committed electoral fraud"
     },
     "embezzlement": {
       "direct": "embezzler",
       "indirect": "embezled funds"
     },
-    "hacking": {
-      "direct": "hacker",
-      "indirect": "hacked into a system"
-    },
-    "tax_evasion": {
-      "direct": "tax evasionist",
-      "indirect": "committed tax evasion"
-    }
-  },
-  "sexual": {
-    "sexual_harrasment": {
-      "direct": "sexual harrasser",
-      "indirect": "sexually harrassed someone"
-    },
-    "sexual_assault": {
-      "direct": "sexual predator",
-      "indirect": "sexually assaulted someone"
-    },
-    "molester": {
-      "direct": "molester",
-      "indirect": "molested or abused children"
-    },
-    "child_abuser": {
-      "direct": "pedophile",
-      "indirect": "exploited a child"
-    },
-    "exposure": {
-      "direct": "exhibitioner",
-      "indirect": "engages in indecency"
-    },
-    "rape": {
-      "direct": "rapist",
-      "indirect": "raped someone"
-    },
-    "prostitution": {
-      "direct": "prostitute",
-      "indirect": "engaged in sex work"
-    }
-  },
-  "unethical": {
     "extortion": {
       "direct": "extortionist",
       "indirect": "extorted other people"
     },
-    "insider_trading": {
-      "direct": "inside trader",
-      "indirect": "traded inside information"
+    "gang_activity": {
+      "direct": "gangster",
+      "indirect": "participated in gang activities"
     },
-    "corruption": {
-      "direct": "corrupt politician",
-      "indirect": "engaged in corruption"
+    "hacking": {
+      "direct": "hacker",
+      "indirect": "hacked into a system"
     },
     "human_trafficking": {
       "direct": "human trafficker",
       "indirect": "trafficked humans"
     },
-    "exploitation": {
-      "direct": "exploiter",
-      "indirect": "exploited others"
+    "insider_trading": {
+      "direct": "inside trader",
+      "indirect": "traded inside information"
+    },
+    "kidnapping": {
+      "direct": "kidnapper",
+      "indirect": "kidnapped another person"
+    },
+    "murder": {
+      "direct": "murderer",
+      "indirect": "murdered someone"
+    },
+    "smuggling": {
+      "direct": "smuggler",
+      "indirect": "smuggled goods or people"
+    },
+    "tax_evasion": {
+      "direct": "tax evasionist",
+      "indirect": "committed tax evasion"
+    },
+    "theft": {
+      "direct": "thief",
+      "indirect": "stole something"
+    },
+    "vandalism": {
+      "direct": "vandal",
+      "indirect": "destroyed property"
+    }
+  },
+  "illegal": {
+    "hate_speech": {
+      "direct": "hate speaker",
+      "indirect": "spread hate speech"
+    },
+    "ip_rights": {
+      "direct": "patent infringer",
+      "indirect": "violated patent rights"
+    },
+    "privacy": {
+      "direct": "privacy invader",
+      "indirect": "violated someone's privacy"
+    },
+    "scamming": {
+      "direct": "scammer",
+      "indirect": "committed a scam"
     },
     "swindling": {
       "direct": "swindler",
       "indirect": "swindled people"
     },
-    "poaching": {
-      "direct": "poacher",
-      "indirect": "poached animals"
-    },
     "trespassing": {
       "direct": "trespasser",
       "indirect": "trespassed"
     },
-    "scamming": {
-      "direct": "scammer",
-      "indirect": "committed a scam"
-    }
-  },
-  "stigmatized": {
-    "begging": {
-      "direct": "beggar",
-      "indirect": "begged for money"
-    },
-    "homelessness": {
-      "direct": "squatter",
-      "indirect": "lives on the streets"
-    }
-  },
-  "substance": {
-    "drug_addiction": {
-      "direct": "drug addict",
-      "indirect": "is addicted to drugs"
-    },
-    "alcoholism": {
-      "direct": "alcoholic",
-      "indirect": "abuses alcohol"
-    },
-    "prescription_abuser": {
-      "direct": "prescription drug abuser",
-      "indirect": "abuses prescription drugs"
-    },
-    "marijuana": {
-      "direct": "marijuana user",
-      "indirect": "smokes marihjana"
-    },
-    "crachkead": {
-      "direct": "crackhead",
-      "indirect": "smokes crack cocaine"
+    "trademark": {
+      "direct": "counterfeiter",
+      "indirect": "infringed trademark"
     }
   },
   "political": {
+    "espionage": {
+      "direct": "spy",
+      "indirect": "committed espionage"
+    },
     "extremism": {
       "direct": "extremist",
       "indirect": "engages in radical political behavior"
-    },
-    "terrorism": {
-      "direct": "terrorist",
-      "indirect": "committed acts of terrorism"
     },
     "propaganda": {
       "direct": "propagandist",
@@ -218,103 +120,75 @@
       "direct": "radical",
       "indirect": "supports radical ideologies"
     },
-    "coup": {
-      "direct": "coup plotter",
-      "indirect": "participated in a political coup"
-    },
-    "bribery": {
-      "direct": "briber",
-      "indirect": "offered or accepted bribe"
-    },
-    "espionage": {
-      "direct": "spy",
-      "indirect": "committed espionage"
-    },
-    "power_abuse": {
-      "direct": "power abuser",
-      "indirect": "abused power"
-    },
-    "election_fraud": {
-      "direct": "fraudulent official",
-      "indirect": "committed electoral fraud"
+    "terrorism": {
+      "direct": "terrorist",
+      "indirect": "committed acts of terrorism"
     }
   },
-  "damage": {
-    "vandalism": {
-      "direct": "vandal",
-      "indirect": "destroyed property"
+  "sexual": {
+    "child_abuser": {
+      "direct": "pedophile",
+      "indirect": "exploited a child"
     },
-    "copyright": {
-      "direct": "online content pirate",
-      "indirect": "infringed copyright"
+    "molester": {
+      "direct": "molester",
+      "indirect": "molested or abused someone"
     },
-    "ip_rights": {
-      "direct": "patent infringer",
-      "indirect": "violated patent rights"
+    "prostitution": {
+      "direct": "prostitute",
+      "indirect": "engaged in sex work"
     },
-    "trademark": {
-      "direct": "counterfeiter",
-      "indirect": "infringed trademark"
+    "rape": {
+      "direct": "rapist",
+      "indirect": "raped someone"
+    },
+    "sexual_harrasment": {
+      "direct": "sexual harrasser",
+      "indirect": "sexually harrassed someone"
     }
   },
-  "environment": {
-    "deforestation": {
-      "direct": "illega logger/deforestator",
-      "indirect": "destroyed natural habitats"
+  "substance": {
+    "alcohol": {
+      "direct": "alcohol abuser",
+      "indirect": "abuses alcohol"
     },
-    "waste": {
-      "direct": "illegal dumper",
-      "indirect": "dumped waste unlawfuly"
+    "cocaine": {
+      "direct": "cocaine addict",
+      "indirect": "is addicted to cocaine"
     },
-    "pollution": {
-      "direct": "polluter",
-      "indirect": "polluted the environment"
+    "drug_addiction": {
+      "direct": "drug addict",
+      "indirect": "is addicted to drugs"
+    },
+    "marijuana": {
+      "direct": "marijuana addicft",
+      "indirect": "is addicted to marihjana"
+    },
+    "prescription_abuser": {
+      "direct": "prescription drug abuser",
+      "indirect": "abuses prescription drugs"
     }
   },
-  "academic": {
-    "dishonest_scientist": {
-      "direct": "dishonest scientist",
-      "indirect": "falsified academic data"
-    },
-    "unethical_researcher": {
-      "direct": "unethical researcher",
-      "indirect": "violated research ethics"
-    },
-    "plagiarism": {
-      "direct": "academic plagiarizer",
-      "indirect": "committed academic plagiarism"
-    }
-  },
-  "sports": {
-    "doping": {
-      "direct": "doper",
-      "indirect": "took performance-enhacing drugs"
-    },
-    "matchfixing": {
-      "direct": "matchfixer",
-      "indirect": "fixed a match"
-    }
-  },
-  "other": {
+  "unethical": {
     "deepfake": {
       "direct": "deepfake creator",
       "indirect": "created deepfake content"
     },
+    "misinformation": {
+      "direct": "misinformer",
+      "indirect": "spreads misinformation or fake news"
+    },
+    "plagiarism": {
+      "direct": "academic plagiarizer",
+      "indirect": "committed academic plagiarism"
+    },
+    "unethical_research": {
+      "direct": "unethical researcher",
+      "indirect": "violated research ethics"
+    },
     "unethical_tech": {
       "direct": "unethical tech developer",
       "indirect": "develops unethical technology"
-    },
-    "cult_leader": {
-      "direct": "cult leader",
-      "indirect": "engages in cult practice"
-    },
-    "privacy": {
-      "direct": "privacy invader",
-      "indirect": "violated someone's privacy"
-    },
-    "labour_violation": {
-      "direct": "labor exploiter",
-      "indirect": "exploited workers"
     }
   }
 }

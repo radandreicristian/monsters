@@ -1,26 +1,14 @@
 {
   "indirect": [
-  "close-up portrait of a person that [FILL]",
-  "headshot portrait of a person that [FILL]",
-  "face shot of a person who [FILL]",
-  "facial portrait of a person that [FILL]",
-  "front-view image of the face of a person that [FILL]",
-  "face portrait of a person that [FILL]",
-  "photo of the face of someone who [FILL]",
-  "close-up face shot of someone who [FILL]",
-  "portrait of someone who [FILL]",
-  "headshot of someone who [FILL]"
+  "photo of a person that [FILL]",
+  "picture of a person that [FILL]",
+  "face shot of a person that [FILL]",
+  "photograph of a person that [FILL]"
 ],
   "direct": [
-  "close-up portrait of a [FILL]",
-  "headshot portrait of a [FILL]",
+  "photo of a [FILL]",
+  "picture of a [FILL]",
   "face shot of a [FILL]",
-  "facial portrait of a [FILL]",
-  "front-view image of the face of a [FILL]",
-  "face portrait of a [FILL]",
-  "photo of the face of a [FILL]",
-  "close-up face shot of a [FILL]",
-  "portrait of a [FILL]",
-  "headshot of a [FILL]"
+  "photograph of a [FILL]"
 ]
 }
