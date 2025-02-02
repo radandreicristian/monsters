@@ -1,4 +1,4 @@
-from nvcr.io/nvidia/pytorch:23.09-py3
+FROM nvcr.io/nvidia/pytorch:23.09-py3
 
 # Set environment variables for the CMake version and build number.
 # CMake is a pre-requisite for dlib, which we use to run the FairFace models.
