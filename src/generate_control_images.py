@@ -2,45 +2,58 @@ import json
 import os
 
 import typer
-
-from src.tti.mock import MockTextToImage
-from src.tti.stable_diffusion import StableDiffusionTextToImage
+from src.tti import *
 from src.logger.utils import get_logger
+from src.utils.deterministic import make_deterministic
+from diffusers.utils.logging import disable_progress_bar
 
 
 logger = get_logger()
 
+id_to_checkpoint = {
+    "dp": "digiplay/AbsoluteReality_v1.8.1",
+    "sdxl": "stabilityai/sdxl-turbo",
+    "sd2r": "friedrichor/stable-diffusion-2-1-realistic",
+    "flux": "black-forest-labs/FLUX.1-schnell"
+}
 
-def get_generator(generation_model_name: str):
-    if generation_model_name == 'mock':
-        return MockTextToImage()
-    else:
-        return StableDiffusionTextToImage(model_id=generation_model_name)
+name_to_tti_mapping = {
+    "dp": AbsoluteRealityTextToImage,
+    "sdxl": SdxlTextToImage,
+    "mock": MockTextToImage,
+    "sd2r": SdTwoRealisticTextToImage,
+    "flux": FluxTextToImage
+}
 
-
-def generate_images(generation_model_name: str) -> None:
+def generate_images(model_id: str,
+                    images_per_prompt: int = 25,
+                   ) -> None:
     
-    with open('data/templates.json', 'r') as f:
-        templates = json.load(f)
+    checkpoint_name = id_to_checkpoint[model_id]
+    text_to_image = name_to_tti_mapping[model_id]()
 
-    description_templates_mapped = [t.replace(" that [FILL]", "") for t in templates["description"]]
-    label_templates_mapped = [t.replace("[FILL]", "person") for t in templates["label"]]
-    
-    control_templates = description_templates_mapped + label_templates_mapped
-    generation_model_name_path = generation_model_name.replace("/", "-")
+    generation_model_name_path = checkpoint_name.replace("/", "-")
 
-    logger.info(control_templates)
-    image_generator = get_generator(generation_model_name)
+    prompts = {
+        "photo of a person",
+        "picture of a person",
+        "face shot of a person",
+        "photograph of a peson"
+    }
+
+    logger.info(prompts)
+    text_to_image = name_to_tti_mapping[model_id]()
+   
     image_dir = os.path.join('data', 'control_images', generation_model_name_path)
     os.makedirs(image_dir, exist_ok=True)
-    current = 0
-    for template in control_templates:
-        for _ in range(10):
-            logger.info(f"Generating image for: {template}")
-            image_path = os.path.join(image_dir, f'{current}.png')
-            image = image_generator.generate_image(template)
-            image_generator.store_image(image, image_path)
-            current += 1
+    for i, prompt in enumerate(prompts):
+        metadata_path = os.path.join(image_dir, f"p_{i}.json")
+        with open(metadata_path, "w") as f:
+            json.dump({"prompt": prompt}, f, indent=4)
+        images = text_to_image.generate_images(prompt, n_images=images_per_prompt)
+        for seed_index, image in enumerate(images):
+            image_path = os.path.join(image_dir, f"p_{i}_seed_{seed_index}.png")
+            text_to_image.store_image(image, image_path)
 
 if __name__ == '__main__':
     typer.run(generate_images)

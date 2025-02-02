@@ -2,10 +2,7 @@ import json
 import os
 
 import typer
-
-from src.tti.mock import MockTextToImage
-from src.tti.absolute_reality import AbsoluteRealityTextToImage
-from src.tti.sdxl import SdxlTextToImage
+from src.tti import *
 from src.logger.utils import get_logger
 from src.utils.deterministic import make_deterministic
 from diffusers.utils.logging import disable_progress_bar
@@ -17,13 +14,17 @@ logger = get_logger()
 
 id_to_checkpoint = {
     "dp": "digiplay/AbsoluteReality_v1.8.1",
-    "sdxl": "stabilityai/sdxl-turbo"
+    "sdxl": "stabilityai/sdxl-turbo",
+    "sd2r": "friedrichor/stable-diffusion-2-1-realistic",
+    "flux": "black-forest-labs/FLUX.1-schnell"
 }
 
 name_to_tti_mapping = {
     "dp": AbsoluteRealityTextToImage,
     "sdxl": SdxlTextToImage,
-    "mock": MockTextToImage
+    "mock": MockTextToImage,
+    "sd2r": SdTwoRealisticTextToImage,
+    "flux": FluxTextToImage
 }
 
 def generate_images(model_id: str,
@@ -34,10 +35,10 @@ def generate_images(model_id: str,
     text_to_image = name_to_tti_mapping[model_id]()
 
     generation_model_name_path = checkpoint_name.replace("/", "-")
-    groups = os.listdir(prompts_root_dir)
+    groups = sorted(os.listdir(prompts_root_dir))
     for group in groups:
         group_path = os.path.join(prompts_root_dir, group)
-        subgroups = os.listdir(group_path)
+        subgroups = sorted(os.listdir(group_path))
         for subgroup in subgroups:
             logger.info(f'Generating images for {group}/{subgroup}...')
             subgroup_name = subgroup.replace(".json", "")
@@ -48,12 +49,12 @@ def generate_images(model_id: str,
                 for i, prompt in enumerate(prompts):
                     image_dir = os.path.join("data", "images", generation_model_name_path, group, subgroup_name, prompt_type)
                     os.makedirs(image_dir, exist_ok=True)
-                    image_path = os.path.join(image_dir, f"{i}.png")
-                    metadata_path = os.path.join(image_dir, f"{i}.json")
+                    metadata_path = os.path.join(image_dir, f"p_{i}.json")
                     with open(metadata_path, "w") as f:
                         json.dump({"prompt": prompt}, f, indent=4)
                     images = text_to_image.generate_images(prompt, n_images=images_per_prompt)
-                    for image in images:
+                    for seed_index, image in enumerate(images):
+                        image_path = os.path.join(image_dir, f"p_{i}_seed_{seed_index}.png")
                         text_to_image.store_image(image, image_path)
 
 

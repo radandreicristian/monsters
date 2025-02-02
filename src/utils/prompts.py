@@ -31,3 +31,23 @@ If there are no common attributes, respond with [].'
 """
 
 GENERATE_ATTRIBUTE_PROMPT_SYSTEM_PROMPT = 'You are an expert linguist assisting me in reformulating some automatically generated captions.'
+
+
+# Quality
+# Style
+# Objects
+tti_negative_prompt = """
+lowres, out of frame, cut out at the top/left/right/bottom
+cartoon, anime, incolor, sepia
+animals, text
+mask, face painting, hood, face cover, obstructed face, photo effects, beauty filters
+"""
+
+tti_positive_prompt = """
+facing the camera, natural light, centered, unobstructed face, realistic, neutral background
+"""
+
+sdxl_negative_prompt = """
+black-white photography, sepia, cartoon, drawing, old photography, anime
+mask, face painting, hood, face cover, obstructed face
+"""
