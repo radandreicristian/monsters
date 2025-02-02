@@ -12,7 +12,7 @@ source ./venv/bin/activate
 
 The following command generates prompts in `data/prompts` based on `data/templates.json` and `data/attributes.json`
 ```
-(venv) python src.generate_prompts
+(venv) python -m src.generate_prompts
 ```
 
 ## Image Generation 
