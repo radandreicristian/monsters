@@ -164,6 +164,8 @@ data/images
 
 data/prompts
 
+data/control_images
+
 src/config/.secret.env
 
 FairFace
