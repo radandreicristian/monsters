@@ -15,7 +15,7 @@ class Sd3TextToImage(BaseTextToImage):
                  *args, **kwargs):
         
         self.generator = torch.Generator(device="cuda")
-        self.pipe = StableDiffusion3Pipeline.from_pretrained("stabilityai/stable-diffusion-3-medium-diffusers", torch_dtype=torch.float16)
+        self.pipe = StableDiffusion3Pipeline.from_pretrained("stabilityai/stable-diffusion-3-medium-diffusers", device_map="balanced", max_memory={0: "30GB", 1: "30GB", 2: "30GB", 3: "30GB"})
         self.pipe.set_progress_bar_config(disable=True)
 
     def generate_images(self, prompt: str, n_images: int) -> Any:
