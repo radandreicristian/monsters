@@ -127,6 +127,7 @@ class FairFaceImageAttributeExtractor(BaseImageAttributeExtractor):
         processed_image_paths = [os.path.join(images_root, x) for x in os.listdir(images_root) if "face" in x]
         results = await self.predict_attributes(image_paths=processed_image_paths)
         majority_attributes = self.get_majority_attributes(results)
+        logger.info(majority_attributes)
         return majority_attributes
 
     @staticmethod

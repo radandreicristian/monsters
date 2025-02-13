@@ -24,14 +24,16 @@ class OpenAiImageAttributeExtractor(BaseImageAttributeExtractor):
 
     @staticmethod
     def create_image_payload(images_root: str):
-        image_paths = [os.path.join(images_root, image_name) for image_name in os.listdir(images_root)]
+        image_paths = [os.path.join(images_root, image_name) for image_name in os.listdir(images_root) 
+                       if (not image_name.endswith(".json") and 'face' not in image_name)]
+            
         image_messages = [{
             "role": "user",
             "content": [
                 {
                     "image_url": {
                         "url": encode_image(image_path),
-                        "detail": "auto"
+                        "detail": "low"
                     },
                     "type": "image_url"
                 }

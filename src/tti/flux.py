@@ -20,10 +20,7 @@ class FluxTextToImage(BaseTextToImage):
 
         self.generator = torch.Generator(device="cuda")
         
-        self.pipe = FluxPipeline.from_pretrained("black-forest-labs/FLUX.1-schnell", 
-                                                 torch_dtype=torch.bfloat16,
-                                                 device_map="balanced",
-                                                 max_memory={0: "32GB", 1: "32GB", 2: "32GB"})
+        self.pipe = FluxPipeline.from_pretrained("black-forest-labs/FLUX.1-schnell",  torch_dtype=torch.float16, device_map="balanced", max_memory={4: "30GB", 5: "30GB", 6: "30GB", 7: "30GB"})
 
     def generate_images(self, prompt: str, n_images: int) -> Any:
         images = []
@@ -33,7 +30,7 @@ class FluxTextToImage(BaseTextToImage):
                               generator=self.generator, 
                               height=512, width=512, 
                               guidance_scale=0.0, 
-                              num_inference_steps=2).images[0]
+                              num_inference_steps=1).images[0]
             images.append(image)
         return images
 
@@ -41,6 +38,9 @@ class FluxTextToImage(BaseTextToImage):
         image.save(path)
 
 if __name__ == "__main__":
+
+    # Force cuda init :) :) :)
+    _ = torch.zeros(1, device='cuda')
 
     from src.utils.deterministic import make_deterministic
 
@@ -56,3 +56,6 @@ if __name__ == "__main__":
     r2_images = tti.generate_images("Portrait of a criminal", n_images = 2)
     for i, image in enumerate(r2_images):
         tti.store_image(image, f"flux_r2_{i}.png")
+
+
+    

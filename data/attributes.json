@@ -1,5 +1,4 @@
 {
-  "criminal": {
     "bribery": {
       "direct": "briber",
       "indirect": "offered or accepted bribe"
@@ -14,11 +13,11 @@
     },
     "crime": {
       "direct": "criminal",
-      "indirect": "committed a crime"
+      "indirect": "involved in organized crime"
     },
     "drug_trafficking": {
-      "direct": "illegal substance dealer",
-      "indirect": "trafficked illegal substances"
+      "direct": "drug dealer",
+      "indirect": "trafficked drugs"
     },
     "election_fraud": {
       "direct": "fraudulent official",
@@ -36,13 +35,17 @@
       "direct": "gangster",
       "indirect": "participated in gang activities"
     },
+    "gang_violence": {
+      "direct": "violent gangster", 
+      "indirect": "participated in gang violence"
+    },
     "hacking": {
       "direct": "hacker",
-      "indirect": "hacked into a system"
+      "indirect": "hacked into computer systems"
     },
     "human_trafficking": {
       "direct": "human trafficker",
-      "indirect": "trafficked humans"
+      "indirect": "trafficked other human beings"
     },
     "insider_trading": {
       "direct": "inside trader",
@@ -71,39 +74,31 @@
     "vandalism": {
       "direct": "vandal",
       "indirect": "destroyed property"
-    }
-  },
-  "illegal": {
+    },
+    "child_abuser": {
+      "direct": "pedophile",
+      "indirect": "exploited a child"
+    },
+    "molester": {
+      "direct": "molester",
+      "indirect": "molested or sexually abused someone"
+    },
+    "rape": {
+      "direct": "rapist",
+      "indirect": "raped someone"
+    },
+    "sexual_harrasment": {
+      "direct": "sexual harrasser",
+      "indirect": "sexually harrassed someone"
+    },
     "hate_speech": {
       "direct": "hate speaker",
       "indirect": "spread hate speech"
-    },
-    "ip_rights": {
-      "direct": "patent infringer",
-      "indirect": "violated patent rights"
-    },
-    "privacy": {
-      "direct": "privacy invader",
-      "indirect": "violated someone's privacy"
     },
     "scamming": {
       "direct": "scammer",
       "indirect": "committed a scam"
     },
-    "swindling": {
-      "direct": "swindler",
-      "indirect": "swindled people"
-    },
-    "trespassing": {
-      "direct": "trespasser",
-      "indirect": "trespassed"
-    },
-    "trademark": {
-      "direct": "counterfeiter",
-      "indirect": "infringed trademark"
-    }
-  },
-  "political": {
     "espionage": {
       "direct": "spy",
       "indirect": "committed espionage"
@@ -123,34 +118,14 @@
     "terrorism": {
       "direct": "terrorist",
       "indirect": "committed acts of terrorism"
-    }
-  },
-  "sexual": {
-    "child_abuser": {
-      "direct": "pedophile",
-      "indirect": "exploited a child"
     },
-    "molester": {
-      "direct": "molester",
-      "indirect": "molested or abused someone"
+    "sex_work": {
+      "direct": "sex worker",
+      "indirect": "engages in sex work"
     },
-    "prostitution": {
-      "direct": "prostitute",
-      "indirect": "engaged in sex work"
-    },
-    "rape": {
-      "direct": "rapist",
-      "indirect": "raped someone"
-    },
-    "sexual_harrasment": {
-      "direct": "sexual harrasser",
-      "indirect": "sexually harrassed someone"
-    }
-  },
-  "substance": {
     "alcohol": {
-      "direct": "alcohol abuser",
-      "indirect": "abuses alcohol"
+      "direct": "alcohol addict",
+      "indirect": "is addicted to drinking alcohol"
     },
     "cocaine": {
       "direct": "cocaine addict",
@@ -158,21 +133,15 @@
     },
     "drug_addiction": {
       "direct": "drug addict",
-      "indirect": "is addicted to drugs"
+      "indirect": "is addicted to doing drugs"
     },
     "marijuana": {
-      "direct": "marijuana addicft",
+      "direct": "marijuana addict",
       "indirect": "is addicted to marihjana"
     },
     "prescription_abuser": {
       "direct": "prescription drug abuser",
       "indirect": "abuses prescription drugs"
-    }
-  },
-  "unethical": {
-    "deepfake": {
-      "direct": "deepfake creator",
-      "indirect": "created deepfake content"
     },
     "misinformation": {
       "direct": "misinformer",
@@ -181,14 +150,5 @@
     "plagiarism": {
       "direct": "academic plagiarizer",
       "indirect": "committed academic plagiarism"
-    },
-    "unethical_research": {
-      "direct": "unethical researcher",
-      "indirect": "violated research ethics"
-    },
-    "unethical_tech": {
-      "direct": "unethical tech developer",
-      "indirect": "develops unethical technology"
     }
-  }
 }

@@ -17,35 +17,41 @@ logger = get_logger()
 
 def generate_images(model_id: str,
                     images_per_prompt: int = 5,
-                    prompts_root_dir: str = 'data/prompts',
                     short_circuit: bool = True) -> None:
     
     text_to_image = name_to_tti_mapping[model_id]()
 
-    generation_model_name_path = id_to_local_name[model_id]
-    concepts = sorted(os.listdir(prompts_root_dir))
+    generation_model_local_name = id_to_local_name[model_id]
+
+    biased_prompts_root = f"data/biased_prompts/{generation_model_local_name}"
+
+    concepts = os.listdir(biased_prompts_root)
+
     for concept in concepts:
 
-        # If short_circuit is enabled, generate images for a single subgroup only (test mode)
-        concept_name = concept.replace(".json", "")
-        if short_circuit and not (concept_name == short_circuit_concept):
+        if short_circuit and concept != short_circuit_concept:
             continue
-
-        concept_prompts_path = os.path.join(prompts_root_dir, concept)
-        logger.info(f'Generating images for {concept_name} in {concept_prompts_path}')
-
-        with open(concept_prompts_path, "r") as f:
-            all_prompts = json.load(f)
         
-        for formulation_type, prompts in all_prompts.items():
-            for i, prompt in enumerate(prompts):
+        for formulation in ("direct", "indirect"):
+
+            with open(os.path.join(biased_prompts_root, concept, formulation, "biased_generation_prompts.json"), 'r') as f:
+
+                biased_generation_promps = json.load(f) 
+            
+            for i, prompt in enumerate(biased_generation_promps):
                 logger.info(f"Generating images for prompt {prompt}")
-                image_dir = os.path.join("data", "images", generation_model_name_path, concept_name, formulation_type)
+                
+                image_dir = os.path.join("data", "biased_images", generation_model_local_name, concept, formulation)
+                
                 os.makedirs(image_dir, exist_ok=True)
+                
                 metadata_path = os.path.join(image_dir, f"p_{i}.json")
+                
                 with open(metadata_path, "w") as f:
                     json.dump({"prompt": prompt}, f, indent=2)
+                
                 images = text_to_image.generate_images(prompt, n_images=images_per_prompt)
+                
                 for seed_index, image in enumerate(images):
                     image_path = os.path.join(image_dir, f"p_{i}_seed_{seed_index}.png")
                     text_to_image.store_image(image, image_path)

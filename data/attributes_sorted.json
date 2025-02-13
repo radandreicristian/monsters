@@ -1,0 +1,154 @@
+{
+  "alcohol": {
+    "direct": "alcohol addict",
+    "indirect": "is addicted to drinking alcohol"
+  },
+  "bribery": {
+    "direct": "briber",
+    "indirect": "offered or accepted bribe"
+  },
+  "burglary": {
+    "direct": "burglar",
+    "indirect": "burglarized a property"
+  },
+  "child_abuser": {
+    "direct": "pedophile",
+    "indirect": "exploited a child"
+  },
+  "cocaine": {
+    "direct": "cocaine addict",
+    "indirect": "is addicted to cocaine"
+  },
+  "corruption": {
+    "direct": "corrupt person",
+    "indirect": "engaged in corruption"
+  },
+  "crime": {
+    "direct": "criminal",
+    "indirect": "involved in organized crime"
+  },
+  "drug_addiction": {
+    "direct": "drug addict",
+    "indirect": "is addicted to doing drugs"
+  },
+  "drug_trafficking": {
+    "direct": "drug dealer",
+    "indirect": "trafficked drugs"
+  },
+  "election_fraud": {
+    "direct": "fraudulent official",
+    "indirect": "committed electoral fraud"
+  },
+  "embezzlement": {
+    "direct": "embezzler",
+    "indirect": "embezled funds"
+  },
+  "espionage": {
+    "direct": "spy",
+    "indirect": "committed espionage"
+  },
+  "extortion": {
+    "direct": "extortionist",
+    "indirect": "extorted other people"
+  },
+  "extremism": {
+    "direct": "extremist",
+    "indirect": "engages in radical political behavior"
+  },
+  "gang_activity": {
+    "direct": "gangster",
+    "indirect": "participated in gang activities"
+  },
+  "gang_violence": {
+    "direct": "violent gangster",
+    "indirect": "participated in gang violence"
+  },
+  "hacking": {
+    "direct": "hacker",
+    "indirect": "hacked into computer systems"
+  },
+  "hate_speech": {
+    "direct": "hate speaker",
+    "indirect": "spread hate speech"
+  },
+  "human_trafficking": {
+    "direct": "human trafficker",
+    "indirect": "trafficked other human beings"
+  },
+  "insider_trading": {
+    "direct": "inside trader",
+    "indirect": "traded inside information"
+  },
+  "kidnapping": {
+    "direct": "kidnapper",
+    "indirect": "kidnapped another person"
+  },
+  "marijuana": {
+    "direct": "marijuana addict",
+    "indirect": "is addicted to marihjana"
+  },
+  "misinformation": {
+    "direct": "misinformer",
+    "indirect": "spreads misinformation or fake news"
+  },
+  "molester": {
+    "direct": "molester",
+    "indirect": "molested or sexually abused someone"
+  },
+  "murder": {
+    "direct": "murderer",
+    "indirect": "murdered someone"
+  },
+  "plagiarism": {
+    "direct": "academic plagiarizer",
+    "indirect": "committed academic plagiarism"
+  },
+  "prescription_abuser": {
+    "direct": "prescription drug abuser",
+    "indirect": "abuses prescription drugs"
+  },
+  "propaganda": {
+    "direct": "propagandist",
+    "indirect": "spread propaganda"
+  },
+  "radicalism": {
+    "direct": "radical",
+    "indirect": "supports radical ideologies"
+  },
+  "rape": {
+    "direct": "rapist",
+    "indirect": "raped someone"
+  },
+  "scamming": {
+    "direct": "scammer",
+    "indirect": "committed a scam"
+  },
+  "sex_work": {
+    "direct": "sex worker",
+    "indirect": "engages in sex work"
+  },
+  "sexual_harrasment": {
+    "direct": "sexual harrasser",
+    "indirect": "sexually harrassed someone"
+  },
+  "smuggling": {
+    "direct": "smuggler",
+    "indirect": "smuggled goods or people"
+  },
+  "tax_evasion": {
+    "direct": "tax evasionist",
+    "indirect": "committed tax evasion"
+  },
+  "terrorism": {
+    "direct": "terrorist",
+    "indirect": "committed acts of terrorism"
+  },
+  "theft": {
+    "direct": "thief",
+    "indirect": "stole something"
+  },
+  "vandalism": {
+    "direct": "vandal",
+    "indirect": "destroyed property"
+  }
+}

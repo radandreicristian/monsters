@@ -28,4 +28,6 @@ RUN apt-get clean && \
 # Change this to your prefered workdir.
 WORKDIR /mnt/QNAP/radand/monsters
 
-RUN pip install aiofiles numpy==1.22.0 pillow==10.4.0 dlib==19.24.5 openai==1.40.0 typer==0.9.4 diffusers==0.30.0 transformers==4.44.0 accelerate python-dotenv flash_attn timm einops bitsandbytes huggingface_hub[cli] sentencepiece
+RUN pip install aiofiles numpy==1.22.0 pillow==10.4.0 dlib==19.24.5 openai==1.62.0 typer==0.9.4 diffusers==0.30.0 transformers==4.44.0 accelerate python-dotenv flash_attn timm einops bitsandbytes huggingface_hub[cli] sentencepiece
+
+CMD ["sleep", "infinity"]

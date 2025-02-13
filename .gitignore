@@ -175,3 +175,7 @@ FairFace
 src/FairFace
 
 data/backup
+
+data/biased_images
+
+data/biased_prompts

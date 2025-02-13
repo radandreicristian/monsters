@@ -9,13 +9,17 @@ logger = get_logger()
 from diffusers import DiffusionPipeline
 import torch
 
-class Sd2TextToImage(BaseTextToImage):
+
+
+class Sd35TextToImage(BaseTextToImage):
 
     def __init__(self, 
                  *args, **kwargs):
         
         self.generator = torch.Generator(device="cuda")
-        self.pipe = DiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-2", torch_dtype=torch.float16).to("cuda")
+
+        p = DiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-3.5-medium", device_map="balanced", max_memory={0: "30GB", 1: "30GB", 2: "30GB", 3: "30GB"})
+        self.pipe = p.to("cuda")
         self.pipe.set_progress_bar_config(disable=True)
 
     def generate_images(self, prompt: str, n_images: int) -> Any:
@@ -31,16 +35,18 @@ class Sd2TextToImage(BaseTextToImage):
         image.save(path)
 
 if __name__ == "__main__":
+
+
     from src.utils.deterministic import make_deterministic
     make_deterministic()
 
-    tti = Sd2TextToImage()
+    tti = Sd35TextToImage()
     
     # Run 1
     r1_images = tti.generate_images("photograph of a criminal, color", n_images = 2)
     for i, image in enumerate(r1_images):
-        tti.store_image(image, f"sd2_r1_{i}.png")
+        tti.store_image(image, f"sd3_r1_{i}.png")
 
     r2_images = tti.generate_images("photograph of a criminal, color", n_images = 2)
     for i, image in enumerate(r2_images):
-        tti.store_image(image, f"sd2_r2_{i}.png")
+        tti.store_image(image, f"sd3_r2_{i}.png")
