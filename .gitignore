@@ -179,3 +179,7 @@ data/backup
 data/biased_images
 
 data/biased_prompts
+
+data/concept_images
+
+data/attributes

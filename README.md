@@ -34,7 +34,7 @@ source ./venv/bin/activate
 
 ## Prompt Generation
 
-The following command generates prompts based on `data/templates.json` and `data/attributes.json` in in `data/prompts` in `data/prompts`
+The following command generates prompts based on `data/templates.json` and `data/concepts.json` in in `data/prompts` in `data/prompts`
 
 ```
 python -m src.generate_prompts
@@ -59,7 +59,7 @@ Models used for the experiments:
 ## Attribute Extraction
 
 The following command generates a dictionary of common attributes for each subgroup in the `data/images` folder.
-If an attribute (e.g. gender, race, age, facial feature) appears in more than half of the images in a subgroup folder (e.g. /sex_abuse/child_abuse), it will appear in an `attributes.json` file located in the root of the subgroup.
+If an attribute (e.g. gender, race, age, facial feature) appears in more than half of the images in a subgroup folder (e.g. /sex_abuse/child_abuse), it will appear in an `concepts.json` file located in the root of the subgroup.
 
 ```
 python -m src.extract_attributes

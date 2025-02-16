@@ -25,6 +25,8 @@ name_to_tti_mapping = {
     "flux": FluxTextToImage
 }
 
+make_deterministic()
+
 def generate_images(model_id: str,
                     images_per_prompt: int = 25,
                    ) -> None:

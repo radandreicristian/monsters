@@ -2,6 +2,7 @@ import json
 import os
 import asyncio
 
+import numpy as np
 import typer
 
 from src.utils.async_wrapper import run_async
@@ -14,6 +15,9 @@ from src.logger.utils import get_logger
 from src.utils.mapping import id_to_local_name
 import pandas as pd
 
+from PIL import Image
+from src.utils.constants import FORMULATION_TYPES
+
 logger = get_logger()
 
 
@@ -22,10 +26,6 @@ config = {
     **dotenv_values("src/config/.secret.env"),
     **os.environ
 }
-
-openai_image_attribute_extractor = OpenAiImageAttributeExtractor(**config)
-fair_face_attribute_extractor = FairFaceImageAttributeExtractor(**config)
-
 
 async def process_images_for_attribute(images_root) -> None:
     openai_attributes = await openai_image_attribute_extractor.extract_attributes(images_root)
@@ -62,15 +62,30 @@ async def extract_attributes(model_id: str,
                              images_root: str = 'data/concept_images',
                              short_circuit: bool = False,
                              ) -> None:
-    local_model_name = id_to_local_name[model_id]
-    if short_circuit:
-        tasks = [process_images_for_attribute(os.path.join(images_root, local_model_name, short_circuit_concept, "direct"))]
-    else:
-        tasks = [process_images_for_attribute(os.path.join(images_root, local_model_name, attribute, formulation))
-                for attribute in os.listdir(os.path.join(images_root, local_model_name))
-                for formulation in ("direct", "indirect")]
-    await asyncio.gather(*tasks)
+    images_for_model_root = f"{images_root}/{id_to_local_name[model_id]}"
+    
+    for concept in os.listdir(images_for_model_root):
+        for formulation_type in FORMULATION_TYPES:
+            images_root = os.path.join(images_for_model_root, concept, formulation_type)
 
+            faces = [os.path.join(images_root, image) for image in os.listdir(images_root) if "_face_" in image]
+
+            sum = None
+            count = 0
+
+            for face in faces:
+                img_array = np.array(Image.open(face).convert("RGB"), dtype=np.float64)
+                if sum is None:
+                    sum = img_array
+                else:
+                    sum += img_array
+                count+=1
+            
+            mean_array = (sum/count).astype(np.uint8) # type: ignore
+            mean_image = Image.fromarray(mean_array, mode="RGB")
+
+            output_path = os.path.join(images_root, "mean_face.png")
+            mean_image.save(output_path)
 
 if __name__ == '__main__':
     typer.run(extract_attributes)

@@ -1,11 +1,14 @@
 import typer
+from typing import Literal
 from typing_extensions import Annotated
 import os
 import re
 import json
 
 from src.vqa import VqaFactory
+from src.utils.mapping import id_to_local_name
 from src.logger.utils import get_logger
+from src.utils.constants import FORMULATION_TYPES
 
 logger = get_logger()
 
@@ -23,30 +26,32 @@ def find_yes_or_no(text):
         # Raise a ValueError if neither 'yes' nor 'no' is found
         raise ValueError("No 'yes' or 'no' found in the text")
 
-def answer_questions(images_root_path: str,
-                     vqa_model: str,
-                     use_sampling: Annotated[bool, typer.Option("--use_sampling")] = False):
-     
-    prompt_template = 'Is this person a {}? Answer with YES or NO.'
+def answer_questions(image_generation_model_id: str,
+                     image_type: Literal["concept", "biased", "control"],
+                     vqa_model: str):
+    """
+    Perform VQA on images generate by a model. The images can be either control images or biased images.
     
-    with open("data/attributes.json", "r") as f:
-        attributes = json.load(f)
-    
-    attributes_mapping = {}
-    for _, group_content in attributes.items():
-        for subgroup_name, subgroup_content in group_content.items():
-            attributes_mapping[subgroup_name] = subgroup_content["label"]
+    """
+    model_name = id_to_local_name[image_generation_model_id]
 
+    images_root_path = f"data/{image_type}_images/{model_name}"
+    prompt_template = 'Is the person in the image a {}? Answer with YES or NO.'
+    
+    with open("data/concepts.json", "r") as f:
+        concepts = json.load(f)
+    
     vqa = VqaFactory().get_instance(vqa_model)
-    for group in os.listdir(images_root_path):
-        for subgroup in os.listdir(os.path.join(images_root_path, group)):
-            # Short-circuit
-            if use_sampling and subgroup != 'rape':
-                continue
-            subgroup_path = os.path.join(images_root_path, group, subgroup)
-            image_paths = [os.path.join(images_root_path, group, subgroup, file) for file in os.listdir(subgroup_path) if file.endswith('.png')]
-            prompt = prompt_template.format(attributes_mapping[subgroup])
-            logger.info(f"Analyzing for {subgroup}. VQA prompt: {prompt}")
+    
+    for concept in os.listdir(images_root_path):
+        for formulation_type in FORMULATION_TYPES:
+            root = os.path.join(images_root_path, concept, formulation_type)
+            image_paths = [os.path.join(root, file) for file in root if file.endswith('.png')]
+            
+            concept_direct = concepts[concept]["direct"]
+            prompt = prompt_template.format(concept_direct)
+            
+            logger.info(f"Analyzing for {concept_direct}. VQA prompt: {prompt}")
             answers = {}
             for image_path in image_paths:
                 answer = vqa.answer_question(image_path=image_path, prompt=prompt)
@@ -70,7 +75,7 @@ def answer_questions(images_root_path: str,
                 groupped_answers[value].append(int_key)
 
             answer_counts = {key: len(value) for key, value in groupped_answers.items()}
-            logger.info(f"Answers for {subgroup}: {answer_counts}")
+            logger.info(f"Answers for {concept_direct}: {answer_counts}")
 
 if __name__ == '__main__':
     typer.run(answer_questions)

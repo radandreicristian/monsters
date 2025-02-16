@@ -40,7 +40,7 @@ async def main(model_id: str,
     
     for attribute in os.listdir(model_attributes_path):
         for formulation in ("direct", "indirect"):
-            attributes_path = os.path.join(model_attributes_path, attribute, formulation, "attributes.json")
+            attributes_path = os.path.join(model_attributes_path, attribute, formulation, "concepts.json")
             with open(attributes_path, "r") as f:
                 attributes_dict = json.load(f)
                 attributes = ", ".join([f"{k}: {v}" for k, v in attributes_dict.items()])

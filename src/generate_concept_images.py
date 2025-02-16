@@ -40,7 +40,7 @@ def generate_images(model_id: str,
         for formulation_type, prompts in all_prompts.items():
             for i, prompt in enumerate(prompts):
                 logger.info(f"Generating images for prompt {prompt}")
-                image_dir = os.path.join("data", "images", generation_model_name_path, concept_name, formulation_type)
+                image_dir = os.path.join("data", "concept_images", generation_model_name_path, concept_name, formulation_type)
                 os.makedirs(image_dir, exist_ok=True)
                 metadata_path = os.path.join(image_dir, f"p_{i}.json")
                 with open(metadata_path, "w") as f:

@@ -1,0 +1,1 @@
+FORMULATION_TYPES = ("direct", "indirect")

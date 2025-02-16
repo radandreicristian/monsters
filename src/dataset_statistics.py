@@ -1,7 +1,7 @@
 import json
 
 if __name__ == "__main__":
-    with open("data/attributes.json", "r") as f:
+    with open("data/concepts.json", "r") as f:
         attributes = json.load(f)
     
     with open("data/templates.json", "r") as f:
