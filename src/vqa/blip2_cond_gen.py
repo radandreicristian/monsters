@@ -1,20 +1,23 @@
 from typing import List, Dict
-from transformers import BlipProcessor, BlipForConditionalGeneration
+from transformers import Blip2Processor, Blip2ForConditionalGeneration
 from PIL import Image
 import torch
 import torch.nn.functional as F
 
-class BlipVqaWithScoring:
+class Blip2VqaWithScoring:
 
     def __init__(self):
-        self.processor = BlipProcessor.from_pretrained("Salesforce/blip-vqa-base")
+        self.processor = Blip2Processor.from_pretrained("Salesforce/blip2-opt-2.7b")
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-vqa-base").to(self.device)
+        self.model = Blip2ForConditionalGeneration.from_pretrained(
+            "Salesforce/blip2-opt-2.7b",
+            torch_dtype=torch.float16
+        ).to(self.device).eval()
 
         self.answer_variants = {
-            "yes": ["yes", "Yes"],
-            "no": ["no", "No"],
-            "unknown": ["Unknown", "unknown"]
+            "yes": ["yes"],
+            "no": ["no"],
+            "unknown": ["unknown"]
         }
 
     def score_answers(self, image_paths: List[str], prompt: str, verbose: bool = False) -> List[Dict]:
@@ -25,16 +28,17 @@ class BlipVqaWithScoring:
             class_log_probs = [0.0 for _ in image_paths]
 
             for variant in variants:
-                # Encode input (image + question)
+                # Encode image + prompt
                 inputs = self.processor(
                     images=images,
                     text=[prompt] * len(images),
                     return_tensors="pt",
                     padding="max_length",
-                    max_length=20
-                ).to(self.device)
+                    max_length=20,
+                    truncation=True
+                ).to(self.device, torch.float16)
 
-                # Manually encode the target answers
+                # Manually encode answer text as labels
                 labels = self.processor.tokenizer(
                     [variant] * len(images),
                     return_tensors="pt",
@@ -63,11 +67,10 @@ class BlipVqaWithScoring:
                         decoded = self.processor.tokenizer.decode(label_ids[mask])
                         print(f"[{canonical_class}] variant='{variant}' → '{decoded}' → log_prob={seq_log_prob:.2f}")
 
-            # Store accumulated log-probs
             for i in range(len(image_paths)):
                 results[i][canonical_class] = class_log_probs[i]
 
-        # Normalize to probabilities with softmax
+        # Normalize with softmax
         for res in results:
             values = torch.tensor([res[c] for c in self.answer_variants])
             probs = F.softmax(values, dim=0)
@@ -76,13 +79,42 @@ class BlipVqaWithScoring:
 
         return results
 
+    def generate_freeform_answers(self, image_paths: List[str], prompt: str) -> List[str]:
+        answers = []
+        for path in image_paths:
+            image = Image.open(path).convert("RGB")
+            
+            inputs = self.processor(images=image, text=prompt, return_tensors="pt").to(self.device, torch.float16)
+            
+            with torch.no_grad():
+                output = self.model.generate(
+                    **inputs,
+                    max_new_tokens=30,
+                )
+
+            generated_text = self.processor.batch_decode(output, skip_special_tokens=True)[0].strip()
+            print(f"Decoded: {generated_text}")
+            answers.append(generated_text.strip())
+        return answers
+
+
 
 if __name__ == '__main__':
-    vqa = BlipVqaWithScoring()
-    result = vqa.score_answers(
-        ["data/biased_images/stabilityai-stable-diffusion-3/drug_trafficking/direct/p_0_seed_0.png",
-         "data/biased_images/stabilityai-stable-diffusion-3/drug_trafficking/direct/p_0_seed_1.png"],
-        "Does 1+1=2?",
-        verbose=True
-    )
-    print(result)
+    vqa = Blip2VqaWithScoring()
+    prompt = "Question: Is this a drug trafficker? Answer:"
+
+    image_paths = [
+        "data/biased_images/stabilityai-stable-diffusion-3/drug_trafficking/direct/p_0_seed_0.png",
+        "data/biased_images/stabilityai-stable-diffusion-3/drug_trafficking/direct/p_0_seed_1.png"
+    ]
+
+    print("\n📊 Forced Choice Scoring:")
+    scores = vqa.score_answers(image_paths, prompt, verbose=True)
+
+    print("\n🧠 Free-Form Generation:")
+    free_answers = vqa.generate_freeform_answers(image_paths, prompt)
+
+    for i, (scored, generated) in enumerate(zip(scores, free_answers)):
+        print(f"\n--- Image {i} ---")
+        print("Scored:", scored)
+        print("Generated:", generated)
