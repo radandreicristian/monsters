@@ -39,31 +39,34 @@ async def main(model_id: str,
     model_attributes_path = f"data/attributes/{local_model_name}"
     
     for attribute in os.listdir(model_attributes_path):
-        for formulation in ("direct", "indirect"):
-            attributes_path = os.path.join(model_attributes_path, attribute, formulation, "concepts.json")
-            with open(attributes_path, "r") as f:
-                attributes_dict = json.load(f)
-                attributes = ", ".join([f"{k}: {v}" for k, v in attributes_dict.items()])
-            tasks = []
+        if not os.path.isdir(os.path.join(model_attributes_path, attribute)):
+            continue
 
-            formulation_templates = templates[formulation]
-            for template in formulation_templates:
-                prompt = add_attributes_to_template_prompt.format(template=template,
-                                                                    attributes=attributes)
-                logger.info(prompt)
-                tasks.append(llm.reply(prompt))
-            responses = await asyncio.gather(*tasks)
+        # Only use the direct formluation
+        attributes_path = os.path.join(model_attributes_path, attribute, "direct", "attributes.json")
+        with open(attributes_path, "r") as f:
+            attributes_dict = json.load(f)
+            attributes = ", ".join([f"{k}: {v}" for k, v in attributes_dict.items()])
+        tasks = []
 
-            # make sure we're lower capping everything to be consistent with the rest
-            responses = [r.lower() for r in responses]
+        formulation_templates = templates["direct"]
+        for template in formulation_templates:
+            prompt = add_attributes_to_template_prompt.format(template=template,
+                                                                attributes=attributes)
+            logger.info(prompt)
+            tasks.append(llm.reply(prompt))
+        responses = await asyncio.gather(*tasks)
 
-            # output like data/biased_prompts/model/attribute/formulation/biased_generation_prompts.json
-            path_dir = os.path.join("data/biased_prompts", local_model_name, attribute, formulation)
+        # make sure we're lower capping everything to be consistent with the rest
+        responses = [r.lower() for r in responses]
 
-            os.makedirs(path_dir, exist_ok=True)
+        # output like data/biased_prompts/model/attribute/formulation/biased_generation_prompts.json
+        path_dir = os.path.join("data/biased_prompts", local_model_name, attribute, "direct")
 
-            with open(os.path.join(path_dir, 'biased_generation_prompts.json'), 'w') as f:
-                json.dump(responses, f, indent=2)
+        os.makedirs(path_dir, exist_ok=True)
+
+        with open(os.path.join(path_dir, 'biased_generation_prompts.json'), 'w') as f:
+            json.dump(responses, f, indent=2)
 
 
 if __name__ == '__main__':

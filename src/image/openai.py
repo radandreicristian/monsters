@@ -25,7 +25,7 @@ class OpenAiImageAttributeExtractor(BaseImageAttributeExtractor):
     @staticmethod
     def create_image_payload(images_root: str):
         image_paths = [os.path.join(images_root, image_name) for image_name in os.listdir(images_root) 
-                       if (not image_name.endswith(".json") and 'face' not in image_name)]
+                       if (not image_name.endswith(".json") and 'face' not in image_name)][:50]
             
         image_messages = [{
             "role": "user",
@@ -39,6 +39,8 @@ class OpenAiImageAttributeExtractor(BaseImageAttributeExtractor):
                 }
             ]
         } for image_path in image_paths]
+
+        logger.info(f"Analyzing {len(image_messages)} images with OpenAI")
         return image_messages
 
     def create_payload(self, images_root: str) -> dict:

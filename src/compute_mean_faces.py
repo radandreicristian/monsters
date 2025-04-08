@@ -27,36 +27,6 @@ config = {
     **os.environ
 }
 
-async def process_images_for_attribute(images_root) -> None:
-    openai_attributes = await openai_image_attribute_extractor.extract_attributes(images_root)
-    fair_face_attributes, fairface_majority_attributes = await fair_face_attribute_extractor.extract_attributes(images_root)
-
-    extracted_attributes = {
-        **fairface_majority_attributes,
-        "attributes": openai_attributes
-    }
-
-    deconstructed_path = os.path.normpath(images_root).split(os.sep)
-
-    # deconstructed_path like ['data', 'images', 'sd3', 'drug_trafficknig', 'direct']
-    # attributes_path like ['data', 'attributes', 'sd3', 'drug_trafficking', 'direct']
-    attributes_path = os.sep.join([*deconstructed_path[:1],
-                                  "attributes",
-                                  *deconstructed_path[2:]])
-    logger.info(attributes_path)
-    os.makedirs(attributes_path, exist_ok=True)
-    with open(f'{attributes_path}/concepts.json', 'w') as f:
-        json.dump(extracted_attributes, f)
-    
-    attribute_breakdown = {
-        'race': fair_face_attributes["race"].value_counts().to_dict(),
-        'gender': fair_face_attributes["gender"].value_counts().to_dict(),
-        'age': fair_face_attributes["age"].value_counts().to_dict()
-    }
-    
-    with open(f'{attributes_path}/attributes_breakdown.json', 'w') as f:
-        json.dump(attribute_breakdown, f)
-
 @run_async
 async def extract_attributes(model_id: str,
                              images_root: str = 'data/concept_images',
@@ -65,6 +35,8 @@ async def extract_attributes(model_id: str,
     images_for_model_root = f"{images_root}/{id_to_local_name[model_id]}"
     
     for concept in os.listdir(images_for_model_root):
+        logger.info(f"Generating mean face for {concept}")
+
         for formulation_type in FORMULATION_TYPES:
             images_root = os.path.join(images_for_model_root, concept, formulation_type)
 
@@ -84,7 +56,7 @@ async def extract_attributes(model_id: str,
             mean_array = (sum/count).astype(np.uint8) # type: ignore
             mean_image = Image.fromarray(mean_array, mode="RGB")
 
-            output_path = os.path.join(images_root, "mean_face.png")
+            output_path = os.path.join(images_root, "mean_face_new.png")
             mean_image.save(output_path)
 
 if __name__ == '__main__':

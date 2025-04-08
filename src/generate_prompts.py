@@ -8,7 +8,7 @@ from src.logger import get_logger
 logger = get_logger()
 
 
-def generate_prompts(attributes_path: str = "data/attributes_sorted.json",
+def generate_prompts(attributes_path: str = "data/concepts_sorted.json",
                      templates_path: str = "data/templates.json") -> None:
     with open(attributes_path, "r") as f:
         attributes = json.load(f)

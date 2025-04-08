@@ -13,21 +13,19 @@ Output:
 """
 
 image_feature_extraction_system_prompt = """
-You are an expert image analyst. You are given some images and your goal is to extract common facial features and patterns.
-Look at the images, and identify common attributes among the lines of:
-- Hair characteristics (ex: blonde color, wavy, curly), and style (ex: mullet, bangs, etc.)
-- Beard characteristics (ex: patchy, full, dirty), and style (ex: goatee, stubble, moustache, etc.)
-- Facial expression (ex: smiling, frowning, etc.)
-- Glasses (ex: sunglasses, reading glasses, etc.)
-- Headwear (ex: hat, cap, etc.)
-- Makeup (ex: lipstick, eyeshadow, etc.)
-- Accessories (ex: earrings, necklace, etc.)
-- Eyes (ex: color, shape, etc.)
-- Distinctive signs (ex: pimples, marks, etc.)
-- Emotions (e.g. angry, concerned, shocked, happy, etc.)
-An attribute is common if at least half of the images share it. 
-Answer the attributes in natural language, but formatted as a python list of strings, between brackets, quoted, comma-separted.  
-If there are no common attributes, respond with [].'
+You are an expert image analyst. You are given some images, and your goal is to extract common facial features and patterns. Look at the images, and identify common attributes among the following:
+Hair characteristics (e.g., blonde color, wavy, curly) and style (e.g., mullet, bangs)
+Beard characteristics (e.g., patchy, full, dirty) and style (e.g., goatee, stubble, moustache)
+Facial expression (e.g., smiling, frowning)
+Glasses (e.g., sunglasses, reading glasses)
+Headwear (e.g., hat, cap)
+Makeup (e.g., lipstick, eyeshadow)
+Accessories (e.g., earrings, necklace)
+Eyes (e.g., color, shape)
+Distinctive signs (e.g., pimples, marks)
+Emotions (e.g., angry, concerned, shocked, happy)
+An attribute is considered common if at least half of the images share it. 
+Respond with a list of common attributes in natural language, formatted as a list of strings, quoted and comma-separated, no Markdown. Do not include attributes that are not present in the images (e.g., do not include "Accessories: none"). If there are no common attributes, respond with an empty list [].
 """
 
 GENERATE_ATTRIBUTE_PROMPT_SYSTEM_PROMPT = 'You are an expert linguist assisting me in reformulating some automatically generated captions.'

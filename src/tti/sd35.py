@@ -27,10 +27,16 @@ class Sd35TextToImage(BaseTextToImage):
         for i in range(n_images):
             self.generator.manual_seed(i)
             image = self.pipe(prompt=prompt+tti_positive_prompt, negative_prompt=sdxl_negative_prompt, 
-                              generator=self.generator, num_inference_steps=28, guidance_scale=7.0).images[0]
+                              generator=self.generator, num_inference_steps=20, guidance_scale=7.0).images[0]
             images.append(image)
         return images
- 
+
+    def generate_single_image(self, prompt, seed: int) -> Any:
+        self.generator.manual_seed(seed)
+        image = self.pipe(prompt=prompt+tti_positive_prompt, negative_prompt=sdxl_negative_prompt, 
+                            generator=self.generator, num_inference_steps=20, guidance_scale=7.0).images[0]
+        return image
+
     def store_image(self, image: Any, path: str) -> None:
         image.save(path)
 

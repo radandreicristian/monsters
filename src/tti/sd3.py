@@ -15,7 +15,9 @@ class Sd3TextToImage(BaseTextToImage):
                  *args, **kwargs):
         
         self.generator = torch.Generator(device="cuda")
-        self.pipe = StableDiffusion3Pipeline.from_pretrained("stabilityai/stable-diffusion-3-medium-diffusers", device_map="balanced", max_memory={0: "30GB", 1: "30GB", 2: "30GB", 3: "30GB"})
+        self.pipe = StableDiffusion3Pipeline.from_pretrained("stabilityai/stable-diffusion-3-medium-diffusers", 
+                                                             device_map="balanced", 
+                                                             max_memory={0: "31GB", 1: "31GB"})
         self.pipe.set_progress_bar_config(disable=True)
 
     def generate_images(self, prompt: str, n_images: int) -> Any:
@@ -23,10 +25,22 @@ class Sd3TextToImage(BaseTextToImage):
         for i in range(n_images):
             self.generator.manual_seed(i)
             image = self.pipe(prompt=prompt+tti_positive_prompt, negative_prompt=sdxl_negative_prompt, 
-                              generator=self.generator, num_inference_steps=28, guidance_scale=7.0).images[0]
+                              generator=self.generator, num_inference_steps=30, guidance_scale=5.0).images[0]
             images.append(image)
         return images
- 
+    
+    def yield_images(self, prompt: str, n_images: int) -> Any:
+        for i in range(n_images):
+            self.generator.manual_seed(i)
+            yield self.pipe(prompt=prompt+tti_positive_prompt, negative_prompt=sdxl_negative_prompt, 
+                              generator=self.generator, num_inference_steps=30, guidance_scale=5.0).images[0]
+
+    def generate_single_image(self, prompt, seed: int) -> Any:
+        self.generator.manual_seed(seed)
+        image = self.pipe(prompt=prompt+tti_positive_prompt, negative_prompt=sdxl_negative_prompt, 
+                            generator=self.generator, num_inference_steps=30, guidance_scale=5.0).images[0]
+        return image
+
     def store_image(self, image: Any, path: str) -> None:
         image.save(path)
 

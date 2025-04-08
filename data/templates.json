@@ -1,14 +1,8 @@
 {
   "indirect": [
-  "photo of a person that [FILL]",
-  "picture of a person that [FILL]",
-  "face shot of a person that [FILL]",
-  "photograph of a person that [FILL]"
+  "photo of a person that [FILL]"
 ],
   "direct": [
-  "photo of a [FILL]",
-  "picture of a [FILL]",
-  "face shot of a [FILL]",
-  "photograph of a [FILL]"
+  "photo of a [FILL]"
 ]
 }
