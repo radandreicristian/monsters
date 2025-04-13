@@ -27,15 +27,12 @@ def find_yes_or_no(text):
         # Raise a ValueError if neither 'yes' nor 'no' is found
         raise ValueError("No 'yes', 'no', 'unknown' not found in the text")
 
-def answer_questions(image_generation_model_id: str,
-                     vqa_model: str):
+def answer_questions(vqa_model: str):
     """
     Perform VQA on images generate by a model. The images can be either control images or biased images.
     
     """
-    model_name = id_to_local_name[image_generation_model_id]
-
-    images_root_path = f"data/control_images/{model_name}"
+    images_root_path = f"data/fairface_balanced"
 
     logger.info(images_root_path)
 
@@ -46,9 +43,8 @@ def answer_questions(image_generation_model_id: str,
     
     vqa = Blip2VqaWithScoring()
     
-    image_paths = [os.path.join(images_root_path, file) for file in os.listdir(images_root_path) if (file.endswith('.png') and not 'face' in file)]
+    image_paths = [os.path.join(images_root_path, file) for file in os.listdir(images_root_path) if (file.endswith('.jpg') and not 'face' in file)]
     
-
     for concept_name, concept_formulation in concepts.items():
 
         concept = concept_formulation["direct"]
@@ -59,10 +55,10 @@ def answer_questions(image_generation_model_id: str,
         
         for idx, image_path in enumerate(image_paths):
             answer = vqa.generate_freeform_answers(image_paths=[image_path], prompt=prompt)[0]
-            logger.info(answer)
+            # logger.info(answer)
             try:
                 sanitized = find_yes_or_no(answer)
-                file_id = image_path.split("/")[-1].replace(".png", "").split("_")[-1]
+                file_id = image_path.split("/")[-1].replace(".jpg", "").split("_")[-1]
                 answers[file_id] = sanitized
             except ValueError: 
                 logger.warning(f"VQA did not provide a Yes/No answer: {answer}")

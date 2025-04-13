@@ -35,7 +35,7 @@ def answer_questions(image_generation_model_id: str,
     """
     model_name = id_to_local_name[image_generation_model_id]
 
-    images_root_path = f"data/control_images/{model_name}"
+    images_root_path = f"data/concept_images/{model_name}"
 
     logger.info(images_root_path)
 
@@ -45,9 +45,6 @@ def answer_questions(image_generation_model_id: str,
         concepts = json.load(f)
     
     vqa = Blip2VqaWithScoring()
-    
-    image_paths = [os.path.join(images_root_path, file) for file in os.listdir(images_root_path) if (file.endswith('.png') and not 'face' in file)]
-    
 
     for concept_name, concept_formulation in concepts.items():
 
@@ -57,6 +54,10 @@ def answer_questions(image_generation_model_id: str,
         logger.info(f"Analyzing for {concept}. VQA prompt: {prompt}")
         answers = {}
         
+        concept_root = os.path.join(images_root_path, concept_name, "direct")
+
+        image_paths = [os.path.join(concept_root, file) for file in os.listdir(concept_root) if (file.endswith('.png') and not 'face' in file)]
+    
         for idx, image_path in enumerate(image_paths):
             answer = vqa.generate_freeform_answers(image_paths=[image_path], prompt=prompt)[0]
             logger.info(answer)
@@ -81,9 +82,9 @@ def answer_questions(image_generation_model_id: str,
 
         answer_counts = {key: len(value) for key, value in groupped_answers.items()}
 
-        os.makedirs(f"{images_root_path}/answers/{vqa_model}", exist_ok=True)
+        os.makedirs(f"{concept_root}/answers/{vqa_model}", exist_ok=True)
 
-        output_path = f"{images_root_path}/answers/{vqa_model}/{concept_name}.json"
+        output_path = f"{concept_root}/answers/{vqa_model}/{concept_name}.json"
 
         with open(output_path, "w") as f:
             json.dump(answer_counts, f)
